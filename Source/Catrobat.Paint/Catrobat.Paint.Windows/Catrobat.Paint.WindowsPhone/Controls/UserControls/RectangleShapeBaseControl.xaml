@@ -43,6 +43,28 @@
                 Visibility="Collapsed"
                 />
 
+            <Rectangle
+                x:Name="AreaToDrawStamp"
+                Width="{Binding ElementName=AreaToDrawGrid,
+                                Path=Width}"
+                Height="{Binding ElementName=AreaToDrawGrid,
+                                 Path=Height}"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Fill="Transparent"
+                Stroke="CornflowerBlue"
+                StrokeLineJoin="Miter"
+                StrokeThickness="3"
+                Visibility="Visible"
+                />
+
+            <Image
+                x:Name="imgStampedImage"
+                Margin="5,5,5,5"
+                Stretch="Fill"
+                />
+
             <Ellipse
                 x:Name="AreaToDrawEllipse"
                 Width="{Binding ElementName=AreaToDrawGrid,

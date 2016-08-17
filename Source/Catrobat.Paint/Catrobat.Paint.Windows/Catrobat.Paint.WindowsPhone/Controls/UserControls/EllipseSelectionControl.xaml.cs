@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 {
-    public sealed partial class EllipseSelectionControl : UserControl
+    public sealed partial class EllipseSelectionControl
     {
         public RectangleShapeBaseControl RectangleShapeBase { get; private set; }
         public Ellipse EllipseToDraw { get; private set; }

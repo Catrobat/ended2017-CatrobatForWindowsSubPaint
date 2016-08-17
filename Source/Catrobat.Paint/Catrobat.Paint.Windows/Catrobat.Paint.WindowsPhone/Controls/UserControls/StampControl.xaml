@@ -5,12 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:Catrobat.Paint.WindowsPhone.Controls.UserControls"
-    Height="670"
-    Width="394"
+    d:DesignHeight="290"
+    d:DesignWidth="290"
+    ManipulationMode="All"
     mc:Ignorable="d"
     >
 
-    <Grid
+    <Grid>
+        <userControls:RectangleShapeBaseControl
+            x:Name="RectangleShapeBaseControl"
+            />
+        <!--
         x:Name="GridMain"
         Height="670"
         HorizontalAlignment="Left"
@@ -305,5 +310,7 @@
                 </TransformGroup>
             </userControls:RotationArrowsShape.RenderTransform>
         </userControls:RotationArrowsShape>
+        -->
     </Grid>
+
 </UserControl>

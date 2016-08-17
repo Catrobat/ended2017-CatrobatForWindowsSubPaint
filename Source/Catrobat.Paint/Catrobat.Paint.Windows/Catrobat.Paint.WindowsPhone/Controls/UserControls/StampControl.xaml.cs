@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 
 // Die Elementvorlage "Benutzersteuerelement" ist unter http://go.microsoft.com/fwlink/?LinkId=234236 dokumentiert.
 
@@ -12,6 +13,11 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 {
     public sealed partial class StampControl
     {
+        public RectangleShapeBaseControl RectangleShapeBase { get; private set; }
+        public Rectangle RectangleToDraw { get; private set; }
+        public Image image { get; private set; }
+        public Grid GridMain { get; private set; }
+
         TransformGroup _transformGridMain;
 
         public double OriginalHeightStampedImage { get; private set; }
@@ -52,6 +58,14 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         public StampControl()
         {
             InitializeComponent();
+
+            RectangleShapeBase = RectangleShapeBaseControl;
+
+            GridMain = (Grid)RectangleShapeBaseControl.FindName("AreaToDrawGrid");
+            image = (Image)RectangleShapeBaseControl.FindName("imgStampedImage");
+            RectangleToDraw = (Rectangle)RectangleShapeBaseControl.FindName("AreaToDrawStamp");
+            RectangleToDraw.Visibility = Visibility.Visible;
+
             _transformGridMain = new TransformGroup();
             GridMain.RenderTransform = _transformGridMain;
             PocketPaintApplication.GetInstance().StampControl = this;
@@ -62,10 +76,10 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             _heightStampControl = 0.0;
             _widthStampControl = 0.0;
             _scaleValueWorkingSpace = 0.0;
-            _heightOfRectangle = rectRectangleStampSelection.Height;
-            _widthOfRectangle = rectRectangleStampSelection.Width;
+            _heightOfRectangle = RectangleToDraw.Height;
+            _widthOfRectangle = RectangleToDraw.Width;
         }
-
+        /*
         public void SetControlSize(double height, double width)
         {
             GridMain.Height = height;
@@ -98,7 +112,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             SetWidthOfHorizontalCenterRectangles(calcualtedHorizontalCenterRectangleWidth);
             SetWidthOfHorizontalCornerRectangles(calcualtedCornerRectangleWidth);
         }
-
+        
         public void SetHeightOfVerticalCornerRectangles(double newValue)
         {
             if (newValue > MaxVerticalCornerRectangleHeight)
@@ -186,13 +200,13 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 rectRightTopHorz.Width = newValue;
             }
         }
-
+        */
         public void SetRectangleForMovementSize(double height, double width)
         {
             _heightOfRectangle = height;
             _widthOfRectangle = width;
-            rectRectangleStampSelection.Height = height;
-            rectRectangleStampSelection.Width = width;
+            RectangleToDraw.Height = height;
+            RectangleToDraw.Width = width;
         }
 
         private Point GetExtremeLeftAndTopCoordinate(double initLeft, double initTop,
@@ -556,7 +570,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void SetStampControlPosition(double stampControlHeight, double stampControlWidth, TranslateTransform moveValue)
         {
-            SetControlSize(stampControlHeight, stampControlWidth);
+            //SetControlSize(stampControlHeight, stampControlWidth);
             SetRectangleForMovementSize(stampControlHeight, stampControlWidth);
             _transformGridMain.Children.Add(moveValue);
         }
@@ -578,7 +592,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void ResetCurrentCopiedSelection()
         {
-            imgStampedImage.Source = null;
+            image.Source = null;
         }
         // TODO: Refactor the setStampSelection function.
         public async void SetStampSelection()
@@ -678,7 +692,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             return move;
         }
-
+        /*
         private void rectCenterBottom_ManipulationDelta_1(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             if (IsStampControlMovable() && (rectRectangleStampSelection.Height + e.Delta.Translation.Y) >= MinRectangleMoveHeight)
@@ -810,7 +824,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             }
 
         }
-
+        
         private void ChangeHeightOfUiElements(double value)
         {
             GridMain.Height += value;
@@ -879,7 +893,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             ResetAppBarButtonRectangleSelectionControl(true);
             SetIsModifiedRectangleMovement = true;
         }
-
+        */
         private void ChangeMarginBottomOfUiElements(double value)
         {
             GridMain.Margin = new Thickness(GridMain.Margin.Left, GridMain.Margin.Top,
@@ -930,7 +944,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 }
                 else
                 {
-                    move.X = (GridMain.Margin.Left + _transformGridMain.Value.OffsetX + rectRectangleStampSelection.Width + move.X) > _limitRight ? 0.0 : move.X;
+                    move.X = (GridMain.Margin.Left + _transformGridMain.Value.OffsetX + RectangleToDraw.Width + move.X) > _limitRight ? 0.0 : move.X;
                 }
 
                 if (move.Y < 0)
@@ -939,7 +953,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 }
                 else
                 {
-                    move.Y = (GridMain.Margin.Top + _transformGridMain.Value.OffsetY + rectRectangleStampSelection.Height + move.Y) > _limitBottom ? 0.0 : move.Y;
+                    move.Y = (GridMain.Margin.Top + _transformGridMain.Value.OffsetY + RectangleToDraw.Height + move.Y) > _limitBottom ? 0.0 : move.Y;
                 }
                 _transformGridMain.Children.Add(move);
 
@@ -1029,7 +1043,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public ImageSource GetImageSourceStampedImage()
         {
-            return imgStampedImage.Source;
+            return image.Source;
         }
 
         public void SetOriginalSizeOfStampedImage(double height, double width)
@@ -1041,7 +1055,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void SetSourceImageStamp(ImageSource imageSource)
         {
-            imgStampedImage.Source = imageSource;
+            image.Source = imageSource;
         }
 
         private void rectRectangleStampSelection_Tapped(object sender, TappedRoutedEventArgs e)
