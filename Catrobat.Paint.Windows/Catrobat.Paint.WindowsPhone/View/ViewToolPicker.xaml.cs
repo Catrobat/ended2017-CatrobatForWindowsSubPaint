@@ -94,9 +94,21 @@ namespace Catrobat.Paint.WindowsPhone.View
                     switch (((Button)sender).Name)
                     {
                         case "BtnBrush":
-                            pocketPaintApplication.SwitchTool(ToolType.Brush);
-                            pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
                             pocketPaintApplication.isBrushTool = true;
+                            pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
+                            if (pocketPaintApplication.PaintData.colorSelected.Color.A == 0)
+                            {
+                                pocketPaintApplication.isBrushEraser = true;                                
+                                pocketPaintApplication.SwitchTool(ToolType.Eraser);
+                                pocketPaintApplication.isToolPickerUsed = false;
+                            }
+                            else
+                            {
+
+                                pocketPaintApplication.SwitchTool(ToolType.Brush);
+                                pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
+                                pocketPaintApplication.isBrushTool = true;
+                            }
                             break;
                         case "BtnCrop":
                             pocketPaintApplication.SwitchTool(ToolType.Crop);
