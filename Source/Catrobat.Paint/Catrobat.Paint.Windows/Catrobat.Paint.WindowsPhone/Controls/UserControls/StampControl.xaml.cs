@@ -61,6 +61,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             RectangleShapeBase = RectangleShapeBaseControl;
 
+
             GridMain = (Grid)RectangleShapeBaseControl.FindName("AreaToDrawGrid");
             image = (Image)RectangleShapeBaseControl.FindName("imgStampedImage");
             RectangleToDraw = (Rectangle)RectangleShapeBaseControl.FindName("AreaToDrawStamp");
@@ -346,15 +347,15 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 }
             }
             // TODO: David Rename this variable or use another one.
-            if (!FoundLeftPixel)
-            {
-                _heightStampControl = scaleValueWorkingSpace * heightOfpaintingAreaCheckeredGrid + _offsetMargin * 2;
-                _widthStampControl = scaleValueWorkingSpace * widthOfPaintingAreaCheckeredGrid + _offsetMargin * 2;
+            //if (!FoundLeftPixel)
+            //{
+            //    _heightStampControl = scaleValueWorkingSpace * heightOfpaintingAreaCheckeredGrid + _offsetMargin * 2;
+            //    _widthStampControl = scaleValueWorkingSpace * widthOfPaintingAreaCheckeredGrid + _offsetMargin * 2;
 
-                ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX;
-                ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY;
-            }
-            _SetLimitsForMovableControlBorder(0, currentPaintApplication, tgPaintingAreaCheckeredGrid);
+            //    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX;
+            //    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY;
+            //}
+            //_SetLimitsForMovableControlBorder(0, currentPaintApplication, tgPaintingAreaCheckeredGrid);
 
             //_widthStampControl = extremeRightAndBottomCoordinate.X / 2;
             //_heightStampControl = extremeRightAndBottomCoordinate.Y / 2;
@@ -577,7 +578,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         public void SetStampControlPosition(double stampControlHeight, double stampControlWidth, TranslateTransform moveValue)
         {
             //SetControlSize(stampControlHeight, stampControlWidth);
-            SetRectangleForMovementSize(stampControlHeight, stampControlWidth);
+            //SetRectangleForMovementSize(stampControlHeight, stampControlWidth);
             _transformGridMain.Children.Add(moveValue);
         }
 
