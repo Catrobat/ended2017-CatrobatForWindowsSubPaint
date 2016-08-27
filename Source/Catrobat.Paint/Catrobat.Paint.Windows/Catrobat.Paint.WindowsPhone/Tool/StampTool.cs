@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Catrobat.Paint.WindowsPhone.Tool
 {
-    class StampTool : ToolBase
+    class StampTool : RectangleShapeBaseTool
     {
         public StampTool()
         {

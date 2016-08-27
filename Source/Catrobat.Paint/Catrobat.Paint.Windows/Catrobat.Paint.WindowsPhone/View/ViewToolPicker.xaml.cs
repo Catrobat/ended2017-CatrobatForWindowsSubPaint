@@ -170,6 +170,12 @@ namespace Catrobat.Paint.WindowsPhone.View
                             break;
                         case "BtnStamp":
                             pocketPaintApplication.SwitchTool(ToolType.Stamp);
+                            enableEdgeTypes = true;
+                            pocketPaintApplication.BarRecEllShape.setIsEnabledOfEdgeType(enableEdgeTypes, enableEdgeTypes, enableEdgeTypes);
+                            pocketPaintApplication.BarRecEllShape.setForgroundOfLabelEdgeType(Colors.White);
+                            pocketPaintApplication.ToolCurrent.ResetDrawingSpace();
+                            pocketPaintApplication.StampControl.Visibility = Visibility.Visible;
+                            pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
                             PocketPaintApplication.GetInstance().StampControl.SetStampSelection();
                             break;
                         case "BtnZoom":
