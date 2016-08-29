@@ -604,6 +604,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         public void ResetCurrentCopiedSelection()
         {
             image.Source = null;
+            RectangleShapeBaseControl.ResetRectangleShapeBaseControl();
         }
         // TODO: Refactor the setStampSelection function.
         public async void SetStampSelection()
