@@ -28,7 +28,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public Grid AreaToDraw { get; private set; }
 
-    private enum Orientation
+        private enum Orientation
         {
             Top, Bottom, Left, Right, TopLeft, TopRight, BottomRight, BottomLeft
         }
@@ -627,6 +627,11 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         {
             Point result = new Point(p1.X + p2.X, p1.Y + p2.Y);
             return result;
+        }
+
+        public TransformGroup GetTransformation()
+        {
+            return m_TransformGridMain;
         }
     }
 }
