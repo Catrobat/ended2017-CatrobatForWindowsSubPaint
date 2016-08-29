@@ -78,8 +78,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             _heightStampControl = 0.0;
             _widthStampControl = 0.0;
             _scaleValueWorkingSpace = 0.0;
-            _heightOfRectangle = RectangleToDraw.Height;
-            _widthOfRectangle = RectangleToDraw.Width;
+            _heightOfRectangle = GridMain.Height;
+            _widthOfRectangle = GridMain.Width;
         }
         /*
         public void SetControlSize(double height, double width)
