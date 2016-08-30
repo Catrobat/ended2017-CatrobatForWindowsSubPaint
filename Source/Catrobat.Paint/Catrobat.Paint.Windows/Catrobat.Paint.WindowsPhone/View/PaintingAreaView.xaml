@@ -148,8 +148,8 @@
         <!--  Stamp-Control  -->
         <userControls:StampControl
             x:Name="ctrlStampControl"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Visibility="Collapsed"
             />
         <userControls:InfoBasicBoxControl

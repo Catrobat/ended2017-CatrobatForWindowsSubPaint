@@ -199,7 +199,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             if (orientation == Orientation.Left)
             {
-                System.Diagnostics.Debug.WriteLine("\nhier");
                 deltaXCorrected = deltaXCorrected * -1;
             }
 
@@ -461,7 +460,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         }
 
         private void ChangeMarginOfGridMainSelection(double leftMargin, double topMargin, double rightMargin, double bottomMargin)
-        {        
+        {
             GridMainSelection.Margin = new Thickness(leftMargin, topMargin, rightMargin, bottomMargin);
         }
 
