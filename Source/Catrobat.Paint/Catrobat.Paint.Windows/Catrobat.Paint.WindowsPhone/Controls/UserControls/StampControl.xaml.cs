@@ -308,6 +308,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             // is needed to move the blue selection to the right position
             TranslateTransform ttfMoveStampControl = new TranslateTransform();
+            ScaleTransform scaleStampControl = new ScaleTransform();
+
             double heightOfpaintingAreaCheckeredGrid = currentPaintApplication.GridWorkingSpace.Height;
             double widthOfPaintingAreaCheckeredGrid = currentPaintApplication.GridWorkingSpace.Width;
             // Calculate the position from Stamp selection in connection with the working space respectively with the drawing
@@ -326,26 +328,35 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                                                                                      extremeLeftAndTopCoordinate, extremeCoordinateOfTop);
 
                 // index starts with zero, so we have to add the value one.
+                scaleValueWorkingSpace = 1;
                 _heightStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0) * scaleValueWorkingSpace + doubleBorderWidthValue;
                 _widthStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0) * scaleValueWorkingSpace + doubleBorderWidthValue;
+                System.Diagnostics.Debug.WriteLine("values: " + extremeRightAndBottomCoordinate + " " + extremeLeftAndTopCoordinate + " " + scaleValueWorkingSpace);
+                System.Diagnostics.Debug.WriteLine("form: " + _heightStampControl + " " + _widthStampControl + " " + doubleBorderWidthValue);
 
-                if (isWorkingSpaceFlippedHorizontally)
-                {
-                    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX + ((widthOfPaintingAreaCheckeredGrid - extremeRightAndBottomCoordinate.X) * scaleValueWorkingSpace);
-                }
-                else
-                {
-                    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX + (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace);
-                }
+                //if (isWorkingSpaceFlippedHorizontally)
+                //{
+                //    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX + ((widthOfPaintingAreaCheckeredGrid - extremeRightAndBottomCoordinate.X) * scaleValueWorkingSpace);
+                //}
+                //else
+                //{
+                //    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX + (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace);
+                //}
 
-                if (isWorkingSpaceFlippedVertically)
-                {
-                    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + ((heightOfpaintingAreaCheckeredGrid - extremeRightAndBottomCoordinate.Y) * scaleValueWorkingSpace);
-                }
-                else
-                {
-                    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace);
-                }
+                //if (isWorkingSpaceFlippedVertically)
+                //{
+                //    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + ((heightOfpaintingAreaCheckeredGrid - extremeRightAndBottomCoordinate.Y) * scaleValueWorkingSpace);
+                //}
+                //else
+                //{
+                //    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace);
+                //}
+                Grid test = (Grid)RectangleShapeBaseControl.FindName("GridMainSelection");
+                test.Height = _heightStampControl;
+                test.Width = _widthStampControl;
+                ttfMoveStampControl.X = extremeLeftAndTopCoordinate.X;
+                ttfMoveStampControl.Y = extremeLeftAndTopCoordinate.Y;
+
             }
             // TODO: David Rename this variable or use another one.
             //if (!FoundLeftPixel)
@@ -360,7 +371,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             //_widthStampControl = extremeRightAndBottomCoordinate.X / 2;
             //_heightStampControl = extremeRightAndBottomCoordinate.Y / 2;
-            //SetStampControlPosition(_heightStampControl, _widthStampControl, ttfMoveStampControl);
+            SetStampControlPosition(ttfMoveStampControl);
+            
         }
 
         // TODO: David Refactor the following function.
@@ -578,27 +590,29 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         // 
         //}
 
-        public void SetStampControlPosition(double stampControlHeight, double stampControlWidth, TranslateTransform moveValue)
+        public void SetStampControlPosition(TranslateTransform moveValue)
         {
             //SetControlSize(stampControlHeight, stampControlWidth);
             //SetRectangleForMovementSize(stampControlHeight, stampControlWidth);
-            _transformGridMain.Children.Add(moveValue);
+            //_transformGridMain.Children.Add(moveValue);
+            RectangleShapeBase.addTransformation(moveValue);
         }
 
         public Point GetLeftTopPointOfStampedSelection()
         {
             uint canvasHeight = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.Height;
             uint canvasWidth = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.Width;
+
             int heightOfStampSelection = (int)PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
             int widthOfStampSelection = (int)PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
             uint uwidthOfStampSelection = (uint)widthOfStampSelection;
             uint uheightOfStampSelection = (uint)heightOfStampSelection;
             Point currentLeftTopCoordinateOfStampSelection = GetXyOffsetBetweenPaintingAreaAndStampControlSelection();
-            System.Diagnostics.Debug.WriteLine("x, y: " + currentLeftTopCoordinateOfStampSelection);
             uint offsetX = (uwidthOfStampSelection + (uint)currentLeftTopCoordinateOfStampSelection.X) > canvasWidth ? canvasWidth - uwidthOfStampSelection : (uint)currentLeftTopCoordinateOfStampSelection.X;
             uint offsetY = ((uint)heightOfStampSelection + (uint)currentLeftTopCoordinateOfStampSelection.Y) > canvasHeight ? canvasHeight - uheightOfStampSelection : (uint)currentLeftTopCoordinateOfStampSelection.Y;
             return new Point(Convert.ToDouble(offsetX), Convert.ToDouble(offsetY));
-        
+
+
         }
 
         public void ResetCurrentCopiedSelection()
@@ -632,7 +646,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 0)
             {
-                System.Diagnostics.Debug.WriteLine("hierr");
                 if (paintingAreaCheckeredGridTransformGroup != null)
                     _scaleValueWorkingSpace = paintingAreaCheckeredGridTransformGroup.Value.M11;
                 _calculateAndSetStampControlPositionWithoutRotating(doubleBorderWidthValue, _scaleValueWorkingSpace, isWorkingSpaceFlippedHorizontally, isWorkingSpaceFlippedVertically);
@@ -1024,14 +1037,13 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 return new Point(0.0, 0.0);
             }
 
-            double doubleMargin = 10.0;
+            //double doubleMargin = 10.0;
+            System.Diagnostics.Debug.WriteLine("transform " + _transformGridMain.Value.OffsetX + " " + _transformGridMain.Value.OffsetY);
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 0)
             {
-                System.Diagnostics.Debug.WriteLine("Gridmargin: " + GridMain.Margin.Left + " " + GridMain.Margin.Top);
-                System.Diagnostics.Debug.WriteLine("transform offset: " + _transformGridMain.Value.OffsetX + " " + _transformGridMain.Value.OffsetY);
                 double offsetX = ((_transformGridMain.Value.OffsetX + 5.0 + GridMain.Margin.Left) - tgPaintingAreaCheckeredGrid.Value.OffsetX) / 0.75;
                 double offsetY = ((_transformGridMain.Value.OffsetY + 5.0 + GridMain.Margin.Top) - tgPaintingAreaCheckeredGrid.Value.OffsetY) / 0.75;
-                System.Diagnostics.Debug.WriteLine("x, y: " + offsetX + " " + offsetY);
+
                 return new Point(Math.Ceiling(offsetX), Math.Ceiling(offsetY));
             }
             //else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90)
