@@ -109,19 +109,9 @@
     <Compile Include="Command\LineCommand.cs" />
     <Compile Include="Command\RotateCommand.cs" />
     <Compile Include="Command\UndoRedoActionbarManager.cs" />
-    <Compile Include="Common\NavigationHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ObservableDictionary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\RelayCommand.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Common\SuspensionManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\ContinuationManager.cs" />
     <Compile Include="Controls\AppBar\ThicknessControl.xaml.cs">
       <DependentUpon>ThicknessControl.xaml</DependentUpon>
     </Compile>
@@ -190,10 +180,7 @@
     <Compile Include="Data\StorageIO.cs" />
     <Compile Include="IdeInteraction.cs" />
     <Compile Include="Listener\ApplicationBarListener.cs" />
-    <Compile Include="Listener\clsRecEllUserControlListener.cs" />
     <Compile Include="Listener\PaintingAreaManipulationListener.cs" />
-    <Compile Include="Navigation\NavigationObject.cs" />
-    <Compile Include="Navigation\NavigationObjectPage.cs" />
     <Compile Include="PixelData\PixelData.cs" />
     <Compile Include="PocketPaintApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,7 +198,6 @@
     <Compile Include="Tool\LineTool.cs" />
     <Compile Include="Tool\MoveZoomTool.cs" />
     <Compile Include="Tool\PipetteTool.cs" />
-    <Compile Include="Tool\RectangleTool_old.cs" />
     <Compile Include="Tool\RotateTool.cs" />
     <Compile Include="Tool\ToolBase.cs" />
     <Compile Include="Tool\ToolType.cs" />
@@ -401,8 +387,6 @@
     <Content Include="StoreManifest.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\AppBar\ThicknessControl.xaml">

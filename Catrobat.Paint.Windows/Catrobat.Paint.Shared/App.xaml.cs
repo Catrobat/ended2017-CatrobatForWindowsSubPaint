@@ -280,7 +280,5 @@ namespace Catrobat.Paint
             // Ensure the current window is active
             Window.Current.Activate();
         }
-
-        public ContinuationManager ContinuationManager { get; private set; }
     }
 }
