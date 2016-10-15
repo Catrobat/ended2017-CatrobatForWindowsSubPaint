@@ -489,6 +489,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             ResetAppBarButtonRectangleSelectionControl(false);
             IsModifiedRectangleForMovement = false;
+            PocketPaintApplication.GetInstance().StampControl.HorizontalAlignment = HorizontalAlignment.Center;
+            PocketPaintApplication.GetInstance().StampControl.VerticalAlignment = VerticalAlignment.Center;
 
             // TODO: evaluate if the outcommented code is needed
             //PocketPaintApplication.GetInstance().PaintingAreaManipulationListener.lastPoint = new Point(0.0, 0.0);

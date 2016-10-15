@@ -45,9 +45,9 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             double heightStampControl = PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
             double widthStampControl = PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
 
-            PocketPaintApplication.GetInstance().StampControl.SetOriginalSizeOfStampedImage(heightStampControl, widthStampControl);
-
             Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
+
+            System.Diagnostics.Debug.WriteLine("leftTop: " + leftTopPointStampSelection);
             double xOffsetStampControl = leftTopPointStampSelection.X;
             double yOffsetStampControl = leftTopPointStampSelection.Y;
 
@@ -76,6 +76,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                         X = (uint) (xOffsetStampControl),
                         Y = (uint) (yOffsetStampControl)
                     };
+                    
                     encoder.BitmapTransform.Bounds = bounds;
 
                     // write out to the stream
@@ -108,7 +109,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
             double xCoordinateOnWorkingSpace = leftTopPointStampSelection.X + 5.0;
             double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y + 5.0;
-
+            System.Diagnostics.Debug.WriteLine("xCoor: " + xCoordinateOnWorkingSpace + " " + yCoordinateOnWorkingSpace);
             Image stampedImage = new Image
             {
                 Source = PocketPaintApplication.GetInstance().StampControl.GetImageSourceStampedImage(),
