@@ -218,17 +218,22 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 //    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace);
                 //}
 
-                Grid grid = (Grid)RectangleShapeBaseControl.FindName("BaseGrid");
+                Grid grid = (Grid)RectangleShapeBaseControl.FindName("AreaToDrawGrid");
+
                 PocketPaintApplication.GetInstance().StampControl.HorizontalAlignment = HorizontalAlignment.Left;
                 PocketPaintApplication.GetInstance().StampControl.VerticalAlignment = VerticalAlignment.Top;
 
                 RectangleShapeBaseControl.SetHeightOfControl(_heightStampControl);
                 RectangleShapeBaseControl.SetWidthOfControl(_widthStampControl);
-                //grid.Height = _heightStampControl;
-                //grid.Width = _widthStampControl;
-                ttfMoveStampControl.X = extremeLeftAndTopCoordinate.X - RectangleToDraw.Margin.Left + currentPaintApplication.PaintingAreaCanvas.Margin.Left;
-                ttfMoveStampControl.Y = extremeLeftAndTopCoordinate.Y - RectangleToDraw.Margin.Top + currentPaintApplication.PaintingAreaCanvas.Margin.Top;
-                System.Diagnostics.Debug.WriteLine("marginP: " + currentPaintApplication.PaintingAreaCanvas.Margin.Left + " " + currentPaintApplication.PaintingAreaCanvas.Margin.Top);
+
+                TransformGroup a =  PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
+
+                ttfMoveStampControl.X = (extremeLeftAndTopCoordinate.X - grid.Margin.Left) * scaleValueWorkingSpace + a.Value.OffsetX - 20;
+                ttfMoveStampControl.Y = (extremeLeftAndTopCoordinate.Y - grid.Margin.Top) * scaleValueWorkingSpace + a.Value.OffsetY - 20;
+
+                System.Diagnostics.Debug.WriteLine("marginP: " + grid.Margin.Left + " " + grid.Margin.Top);
+                System.Diagnostics.Debug.WriteLine("offsetP: " + a.Value.OffsetX + " " + a.Value.OffsetY);
+                System.Diagnostics.Debug.WriteLine("finalP: " + ttfMoveStampControl.X + " " + ttfMoveStampControl.Y);
                 RectangleShapeBase.addTransformation(ttfMoveStampControl);
             }
             
