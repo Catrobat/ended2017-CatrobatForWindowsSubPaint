@@ -47,7 +47,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
             Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
 
-            System.Diagnostics.Debug.WriteLine("leftTop: " + leftTopPointStampSelection);
+            System.Diagnostics.Debug.WriteLine("leftTop(Stampcopy): " + leftTopPointStampSelection);
             double xOffsetStampControl = leftTopPointStampSelection.X;
             double yOffsetStampControl = leftTopPointStampSelection.Y;
 

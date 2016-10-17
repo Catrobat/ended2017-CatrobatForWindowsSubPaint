@@ -13,14 +13,6 @@
     >
 
     <Grid
-        x:Name ="BaseGrid"
-        Width="290"
-        Height="290"
-        Margin="0,0,0,0"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        >
-    <Grid
         x:Name="GridMainSelection"
         Width="290"
         Height="290"
@@ -486,6 +478,5 @@
         </Grid>
 
 
-    </Grid>
     </Grid>
 </UserControl>
