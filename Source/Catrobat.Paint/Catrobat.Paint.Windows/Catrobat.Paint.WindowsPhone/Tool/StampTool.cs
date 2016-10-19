@@ -44,10 +44,21 @@ namespace Catrobat.Paint.WindowsPhone.Tool
         {
             double heightStampControl = PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
             double widthStampControl = PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
+            double croppedImageHeight = heightStampControl, croppedImageWidth = widthStampControl;
 
             Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
 
             System.Diagnostics.Debug.WriteLine("leftTop(Stampcopy): " + leftTopPointStampSelection);
+            if(leftTopPointStampSelection.X < 0)
+            {
+                // + and - = -
+                croppedImageWidth = widthStampControl + leftTopPointStampSelection.X;
+            }
+            if(leftTopPointStampSelection.Y < 0)
+            {
+                croppedImageHeight = heightStampControl + leftTopPointStampSelection.Y;
+            }
+
             double xOffsetStampControl = leftTopPointStampSelection.X;
             double yOffsetStampControl = leftTopPointStampSelection.Y;
 
@@ -71,12 +82,12 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
                     BitmapBounds bounds = new BitmapBounds
                     {
-                        Height = (uint) heightStampControl - 1,
-                        Width = (uint) widthStampControl - 1,
-                        X = (uint) (xOffsetStampControl),
-                        Y = (uint) (yOffsetStampControl)
+                        Height = (uint) croppedImageHeight - 1,
+                        Width = (uint) croppedImageWidth - 1,
+                        X = (uint) ((xOffsetStampControl) < 0 ? 0 : xOffsetStampControl),
+                        Y = (uint) ((yOffsetStampControl) < 0 ? 0 : yOffsetStampControl)
                     };
-                    
+
                     encoder.BitmapTransform.Bounds = bounds;
 
                     // write out to the stream
@@ -90,7 +101,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                     }
                 }
                 //render the stream to the screen
-                WriteableBitmap wbCroppedBitmap = new WriteableBitmap((int)widthStampControl, (int)heightStampControl);
+                WriteableBitmap wbCroppedBitmap = new WriteableBitmap((int)croppedImageWidth, (int)croppedImageHeight);
                 wbCroppedBitmap.SetSource(mrAccessStream);
                 PocketPaintApplication.GetInstance().StampControl.SetSourceImageStamp(wbCroppedBitmap);
             }
@@ -107,18 +118,18 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             double widthStampControl = PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
 
             Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
-            double xCoordinateOnWorkingSpace = leftTopPointStampSelection.X + 5.0;
-            double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y + 5.0;
+            double xCoordinateOnWorkingSpace = leftTopPointStampSelection.X;
+            double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y;
             System.Diagnostics.Debug.WriteLine("xCoor: " + xCoordinateOnWorkingSpace + " " + yCoordinateOnWorkingSpace);
             Image stampedImage = new Image
             {
                 Source = PocketPaintApplication.GetInstance().StampControl.GetImageSourceStampedImage(),
-                Height = heightStampControl - 10.0,
-                Width = widthStampControl - 10.0,
+                Height = heightStampControl,
+                Width = widthStampControl,
                 Stretch = Stretch.Fill
             };
 
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(stampedImage, (int)(xCoordinateOnWorkingSpace + 5.0), (int)(yCoordinateOnWorkingSpace + 5.0));
+            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(stampedImage, (int)(xCoordinateOnWorkingSpace), (int)(yCoordinateOnWorkingSpace));
             CommandManager.GetInstance().CommitCommand(new StampCommand((uint)xCoordinateOnWorkingSpace, (uint)yCoordinateOnWorkingSpace, stampedImage));
         }
 

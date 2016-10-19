@@ -421,6 +421,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 GridMainSelection.Height = newHeightRectangleToDraw + (GridMainSelection.Height - AreaToDrawGrid.Height);
                 MovementRectangle.Height = newHeightRectangleToDraw + (MovementRectangle.Height - AreaToDrawGrid.Height);
                 AreaToDrawGrid.Height = newHeightRectangleToDraw;
+                PocketPaintApplication.GetInstance().StampControl.setHeightOfControl(newHeightRectangleToDraw);
             }
         }
 
@@ -445,6 +446,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 GridMainSelection.Width = newWidthRectangleToDraw + (GridMainSelection.Width - AreaToDrawGrid.Width);
                 MovementRectangle.Width = newWidthRectangleToDraw + (MovementRectangle.Width - AreaToDrawGrid.Width);
                 AreaToDrawGrid.Width = newWidthRectangleToDraw;
+                PocketPaintApplication.GetInstance().StampControl.setWidthOfControl(newWidthRectangleToDraw);
             }
         }
         public double widthOfRectangleToDraw

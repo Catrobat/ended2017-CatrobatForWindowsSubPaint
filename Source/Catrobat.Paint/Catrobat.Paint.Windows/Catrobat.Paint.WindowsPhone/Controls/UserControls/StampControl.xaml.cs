@@ -69,14 +69,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             _heightOfRectangle = GridMain.Height;
             _widthOfRectangle = GridMain.Width;
         }
-        
-        public void SetRectangleForMovementSize(double height, double width)
-        {
-            _heightOfRectangle = height;
-            _widthOfRectangle = width;
-            RectangleToDraw.Height = height;
-            RectangleToDraw.Width = width;
-        }
 
         private Point GetExtremeLeftAndTopCoordinate(double initLeft, double initTop,
                                                      ref int xCoordinateOfExtremeTop)
@@ -239,19 +231,16 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         {
             uint canvasHeight = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.Height;
             uint canvasWidth = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.Width;
-            System.Diagnostics.Debug.WriteLine("cH, cW: " + canvasHeight + " " + canvasWidth);
 
-            int heightOfStampSelection = (int)PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
-            int widthOfStampSelection = (int)PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
-
-            uint uwidthOfStampSelection = (uint)widthOfStampSelection;
-            uint uheightOfStampSelection = (uint)heightOfStampSelection;
+            uint uwidthOfStampSelection = (uint)PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
+            uint uheightOfStampSelection = (uint)PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
 
             Point currentLeftTopCoordinateOfStampSelection = GetXyOffsetBetweenPaintingAreaAndStampControlSelection();
-            uint offsetX = (uwidthOfStampSelection + (uint)currentLeftTopCoordinateOfStampSelection.X) > canvasWidth ? canvasWidth - uwidthOfStampSelection : (uint)currentLeftTopCoordinateOfStampSelection.X;
-            uint offsetY = ((uint)heightOfStampSelection + (uint)currentLeftTopCoordinateOfStampSelection.Y) > canvasHeight ? canvasHeight - uheightOfStampSelection : (uint)currentLeftTopCoordinateOfStampSelection.Y;
+            System.Diagnostics.Debug.WriteLine("cLT: " + currentLeftTopCoordinateOfStampSelection);
+            //uint offsetX = (uwidthOfStampSelection + (uint)currentLeftTopCoordinateOfStampSelection.X) > canvasWidth ? canvasWidth - uwidthOfStampSelection : (uint)currentLeftTopCoordinateOfStampSelection.X;
+            //uint offsetY = ((uint)uheightOfStampSelection + (uint)currentLeftTopCoordinateOfStampSelection.Y) > canvasHeight ? canvasHeight - uheightOfStampSelection : (uint)currentLeftTopCoordinateOfStampSelection.Y;
 
-            return new Point(Convert.ToDouble(offsetX), Convert.ToDouble(offsetY));
+            return new Point(Convert.ToDouble(currentLeftTopCoordinateOfStampSelection.X), Convert.ToDouble(currentLeftTopCoordinateOfStampSelection.Y));
         }
 
         public void ResetCurrentCopiedSelection()
@@ -371,12 +360,12 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public double GetHeightOfRectangleStampSelection()
         {
-            return (_heightOfRectangle - 10.0) / _scaleValueWorkingSpace;
+            return _heightOfRectangle / _scaleValueWorkingSpace;
         }
 
         public double GetWidthOfRectangleStampSelection()
         {
-            return (_widthOfRectangle - 10.0) / _scaleValueWorkingSpace;
+            return _widthOfRectangle / _scaleValueWorkingSpace;
         }
 
         public Point GetXyOffsetBetweenPaintingAreaAndStampControlSelection()
@@ -390,17 +379,18 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 return new Point(0.0, 0.0);
             }
 
-            //double doubleMargin = 10.0;
-            Point centerCoordinates = RectangleShapeBase.GetCenterCoordinateOfGridMain();
-            Point cornerCoordinates = new Point(centerCoordinates.X - GridMain.Width / 2, centerCoordinates.Y - GridMain.Height/2);
+            Point cornerCoordinates = new Point(_transformGridMain.Value.OffsetX + GridMain.Margin.Left, _transformGridMain.Value.OffsetY + GridMain.Margin.Top);
 
             System.Diagnostics.Debug.WriteLine("offset " + _transformGridMain.Value.OffsetX + " " + _transformGridMain.Value.OffsetY);
             System.Diagnostics.Debug.WriteLine("cornerCoor: " + cornerCoordinates);
 
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 0)
             {
-                double offsetX = ((_transformGridMain.Value.OffsetX + 5.0 + GridMain.Margin.Left) - tgPaintingAreaCheckeredGrid.Value.OffsetX) / 0.75;
-                double offsetY = ((_transformGridMain.Value.OffsetY + 5.0 + GridMain.Margin.Top) - tgPaintingAreaCheckeredGrid.Value.OffsetY) / 0.75;
+                //double offsetX = ((_transformGridMain.Value.OffsetX + 5.0 + GridMain.Margin.Left) - tgPaintingAreaCheckeredGrid.Value.OffsetX) / 0.75;
+                //double offsetY = ((_transformGridMain.Value.OffsetY + 5.0 + GridMain.Margin.Top) - tgPaintingAreaCheckeredGrid.Value.OffsetY) / 0.75;
+
+                double offsetX = (cornerCoordinates.X - tgPaintingAreaCheckeredGrid.Value.OffsetX) / _scaleValueWorkingSpace;
+                double offsetY = (cornerCoordinates.Y - tgPaintingAreaCheckeredGrid.Value.OffsetY) / _scaleValueWorkingSpace;
 
                 return new Point(Math.Ceiling(offsetX), Math.Ceiling(offsetY));
             }
@@ -431,6 +421,16 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void rectRectangleStampSelection_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ((StampTool)PocketPaintApplication.GetInstance().ToolCurrent).StampPaste();
+        }
+
+        public void setHeightOfControl(double height)
+        {
+            _heightOfRectangle = height;
+        }
+
+        public void setWidthOfControl(double width)
+        {
+            _widthOfRectangle = width;
         }
     }
 }
