@@ -185,8 +185,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                                                                                      extremeLeftAndTopCoordinate, extremeCoordinateOfTop);
 
                 // index starts with zero, so we have to add the value one.              
-                _heightStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0) * scaleValueWorkingSpace;
-                _widthStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0) * scaleValueWorkingSpace;
+                _heightStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0 + (image.Margin.Top * 2)) * scaleValueWorkingSpace;
+                _widthStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0 + (image.Margin.Left * 2)) * scaleValueWorkingSpace;
 
                 System.Diagnostics.Debug.WriteLine("values: " + extremeRightAndBottomCoordinate + " " + extremeLeftAndTopCoordinate + " " + scaleValueWorkingSpace);
                 System.Diagnostics.Debug.WriteLine("form: " + _heightStampControl + " " + _widthStampControl + " " + doubleBorderWidthValue);
@@ -219,8 +219,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
                 TransformGroup workingSpaceTransformation =  PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
 
-                ttfMoveStampControl.X = (extremeLeftAndTopCoordinate.X - drawGrid.Margin.Left) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetX - 20;
-                ttfMoveStampControl.Y = (extremeLeftAndTopCoordinate.Y - drawGrid.Margin.Top) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetY - 20;
+                ttfMoveStampControl.X = (extremeLeftAndTopCoordinate.X - drawGrid.Margin.Left - image.Margin.Left) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetX - 20;
+                ttfMoveStampControl.Y = (extremeLeftAndTopCoordinate.Y - drawGrid.Margin.Top - image.Margin.Top) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetY - 20;
 
                 RectangleShapeBase.addTransformation(ttfMoveStampControl);
             }

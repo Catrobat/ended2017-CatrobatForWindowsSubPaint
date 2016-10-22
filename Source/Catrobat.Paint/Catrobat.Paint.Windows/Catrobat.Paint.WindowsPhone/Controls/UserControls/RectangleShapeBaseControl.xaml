@@ -63,7 +63,7 @@
 
             <Image
                 x:Name="imgStampedImage"
-                Margin="5,5,5,5"
+                Margin="3,3,3,3"
                 Stretch="Fill"
                 />
 
