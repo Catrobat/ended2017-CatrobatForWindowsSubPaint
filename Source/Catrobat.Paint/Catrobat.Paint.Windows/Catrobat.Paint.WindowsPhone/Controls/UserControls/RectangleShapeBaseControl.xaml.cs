@@ -49,6 +49,10 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             };
 
             IsModifiedRectangleForMovement = false;
+
+            var marginValueLeftAndRight = (Window.Current.Bounds.Width - GridMainSelection.Width) / 2;
+            var marginValueTopAndBottom = (Window.Current.Bounds.Height - GridMainSelection.Height) / 2;
+            GridMainSelection.Margin = new Thickness(marginValueLeftAndRight, marginValueTopAndBottom, marginValueLeftAndRight, marginValueTopAndBottom);
         }
 
         public bool IsModifiedRectangleForMovement { get; set; }
@@ -122,6 +126,25 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             var xVal = e.Delta.Translation.X;
             var yVal = e.Delta.Translation.Y;
 
+            //if(xVal >= 0 && yVal >= 0)
+            //{
+            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal, 
+            //        GridMainSelection.Margin.Right - xVal , GridMainSelection.Margin.Bottom - yVal);
+            //} else if(xVal >= 0 && yVal < 0)
+            //{
+            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal,
+            //        GridMainSelection.Margin.Right - xVal, GridMainSelection.Margin.Bottom - yVal);
+            //} else if(xVal < 0 && yVal >= 0) 
+            //{
+            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal,
+            //        GridMainSelection.Margin.Right - xVal, GridMainSelection.Margin.Bottom - yVal);
+            //}
+            //else
+            //{
+            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal,
+            //        GridMainSelection.Margin.Right - xVal, GridMainSelection.Margin.Bottom - yVal);
+            //}
+
             m_CenterPointRotation.X += xVal;
             m_CenterPointRotation.Y += yVal;
 
@@ -184,6 +207,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void resizeWidth(double deltaX, double deltaY, Orientation orientation)
         {
             Debug.Assert(orientation == Orientation.Left || orientation == Orientation.Right);
+            m_CenterPointRotation.X += deltaX;
+            m_CenterPointRotation.Y += deltaY;
 
             float rotation = m_RotationAngle;
             while (rotation < 0)
@@ -246,6 +271,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void resizeHeight(double deltaX, double deltaY, Orientation orientation)
         {
             Debug.Assert(orientation == Orientation.Top || orientation == Orientation.Bottom);
+            m_CenterPointRotation.X += deltaX;
+            m_CenterPointRotation.Y += deltaY;
 
             float rotation = m_RotationAngle;
             while (rotation < 0)
