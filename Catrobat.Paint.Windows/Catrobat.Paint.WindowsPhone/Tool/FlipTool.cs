@@ -115,8 +115,10 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
             PocketPaintApplication.GetInstance().flipX = this._flipX;
             PocketPaintApplication.GetInstance().flipY = this._flipY;
-
+            
             PaintingAreaCanvasSettings(renderTransform);
+            PocketPaintApplication.GetInstance().PaintingAreaView.setFlippedHorizontal(false);
+            PocketPaintApplication.GetInstance().PaintingAreaView.setFlippedVertical(false);
             CommandManager.GetInstance().CommitCommand(new FlipCommand(renderTransform));
         }
 

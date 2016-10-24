@@ -41,6 +41,7 @@ namespace Catrobat.Paint.WindowsPhone.View
         static bool isFullscreen;
         static bool isPointerEventLoaded;
         static int zoomCounter;
+        static bool m_isWorkingSpaceMoved;
         CoreApplicationView view;
 
         public PaintingAreaView()
@@ -53,6 +54,8 @@ namespace Catrobat.Paint.WindowsPhone.View
             isFullscreen = false;
             isPointerEventLoaded = false;
             zoomCounter = 0;
+            m_isWorkingSpaceMoved = false;
+
 
             PocketPaintApplication.GetInstance().PaintingAreaCanvas = PaintingAreaCanvas;
             PocketPaintApplication.GetInstance().EraserCanvas = EraserCanvas;
@@ -104,6 +107,8 @@ namespace Catrobat.Paint.WindowsPhone.View
             PocketPaintApplication.GetInstance().PaintingAreaCanvas.Width = Window.Current.Bounds.Width;
             view = CoreApplication.GetCurrentView();
             drawCheckeredBackgroundInCheckeredCanvas(9);
+
+            var test = ucRectangleSelectionControl;
         }
 
         public void drawCheckeredBackgroundInCheckeredCanvas(uint sizeOfBoxes)
@@ -646,6 +651,12 @@ namespace Catrobat.Paint.WindowsPhone.View
             }
             else if ("barMove" == type || "barZoom" == type)
             {
+                AppBarButton app_btnReset = new AppBarButton();
+                app_btnReset.Name = "appButtonResetZoom";
+                app_btnReset.Icon = bitmapIconFrom("icon_menu_cursor.png");
+                app_btnReset.Label = "Ausgangsposition";
+                app_btnReset.Click += app_btn_reset_Click;
+
                 if ("barZoom" == type)
                 {
                     AppBarButton app_btnZoomIn = new AppBarButton();
@@ -658,14 +669,16 @@ namespace Catrobat.Paint.WindowsPhone.View
                     app_btnZoomOut.Click += BtnZoomOut_Click;
                     cmdBar.PrimaryCommands.Add(app_btnZoomIn);
                     cmdBar.PrimaryCommands.Add(app_btnZoomOut);
+
                 }
 
-                AppBarButton app_btnReset = new AppBarButton();
+                app_btnReset = new AppBarButton();
                 app_btnReset.Name = "appButtonResetZoom";
                 app_btnReset.Icon = bitmapIconFrom("icon_menu_cursor.png");
                 app_btnReset.Label = "Ausgangsposition";
                 app_btnReset.Click += app_btn_reset_Click;
-                app_btnReset.IsEnabled = zoomCounter == 0 ? false : true;              
+                app_btnReset.IsEnabled = zoomCounter == 0 ? false : true;
+
                 cmdBar.PrimaryCommands.Add(app_btnReset);
 
                 unloadPointerEvents();
@@ -1166,16 +1179,16 @@ namespace Catrobat.Paint.WindowsPhone.View
 
         void BtnZoomOut_Click(object sender, RoutedEventArgs e)
         {
-                enableResetButtonZoom(-1);
-                MoveZoomTool tool = new MoveZoomTool();
-                ScaleTransform scaletransform = new ScaleTransform();
-                scaletransform.ScaleX = 0.9;
-                scaletransform.ScaleY = 0.9;
-                PocketPaintApplication.GetInstance().isZoomButtonClicked = true;
-                tool.HandleMove(scaletransform);
-                tool.HandleUp(scaletransform);          
+            enableResetButtonZoom(-1);
+            MoveZoomTool tool = new MoveZoomTool();
+            ScaleTransform scaletransform = new ScaleTransform();
+            scaletransform.ScaleX = 0.9;
+            scaletransform.ScaleY = 0.9;
+            PocketPaintApplication.GetInstance().isZoomButtonClicked = true;
+            tool.HandleMove(scaletransform);
+            tool.HandleUp(scaletransform);
         }
-        
+
         void BtnZoomIn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1186,13 +1199,13 @@ namespace Catrobat.Paint.WindowsPhone.View
                 scaletransform.ScaleX = 1.1;
                 scaletransform.ScaleY = 1.1;
                 PocketPaintApplication.GetInstance().isZoomButtonClicked = true;
-                tool.HandleMove(scaletransform);                 
-                tool.HandleUp(scaletransform);                
+                tool.HandleMove(scaletransform);
+                tool.HandleUp(scaletransform);
             }
             catch (Exception exception)
             {
                 System.Diagnostics.Debug.WriteLine(exception.StackTrace);
-            }          
+            }
         }
 
         public void ToolChangedHere(ToolBase tool)
@@ -1819,5 +1832,22 @@ namespace Catrobat.Paint.WindowsPhone.View
                 UpdateThicknessPropertiesButtonLayout(button);
             }
         }
+
+        public void isWorkingSpaceMoved(bool isWorkingSpaceMoved)
+        {
+            m_isWorkingSpaceMoved = isWorkingSpaceMoved;
+        }
+        
+        public void setFlippedVertical(bool flippedVerticalValue)
+        {
+            flipVertical = flippedVerticalValue;
+        }
+
+        public void setFlippedHorizontal(bool flippedHorizontalValue)
+        {
+            flipHorizontal = flippedHorizontalValue;
+        }
+
     }
+
 }

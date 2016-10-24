@@ -37,6 +37,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             startScale.X = _transforms.Value.M11;
             startScale.Y = _transforms.Value.M22;       
         }
+
         public override void HandleDown(object arg)
         {
             startScale.X = ((Point)arg).X;
@@ -82,11 +83,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 return;
             }
 
-            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
-            if (appBarButtonReset != null)
-            {
-                appBarButtonReset.IsEnabled = true;
-            }
+            setResetButtonInPaintingAreaView(true);
         }
 
         /*public async Task HandleMoveTask(object arg)
@@ -145,9 +142,19 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
         }
 
+        public void setResetButtonInPaintingAreaView(bool resetButtuonValue)
+        {
+            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+            if (appBarButtonReset != null)
+            {
+                appBarButtonReset.IsEnabled = resetButtuonValue;
+                PocketPaintApplication.GetInstance().PaintingAreaView.isWorkingSpaceMoved(resetButtuonValue);
+            }
+        }
         public override void ResetDrawingSpace()
         {
             _transforms.Children.Clear();
+            setResetButtonInPaintingAreaView(false);
             PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(null);
             // TODO: If you reset the working-space then it should be generated a removecommand
             // TODO: Write a ResetMoveZoomCommand

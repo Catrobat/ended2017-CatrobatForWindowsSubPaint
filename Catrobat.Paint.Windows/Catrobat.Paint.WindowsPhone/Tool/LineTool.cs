@@ -1,6 +1,8 @@
 ﻿using Catrobat.Paint.WindowsPhone.Command;
 using System;
 using Windows.Foundation;
+using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
@@ -8,18 +10,13 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 {
     class LineTool : ToolBase
     {
-        private Path _path;
-        private PathGeometry _pathGeometry;
-        private PathFigureCollection _pathFigureCollection;
-        private PathFigure _pathFigure;
-        private PathSegmentCollection _pathSegmentCollection;
-        private Point _lastPoint;
-        private LineSegment _lineSegment;
+        private LineSegment _line_segment;
+        private BaseDrawTool _base_draw_tool;
 
         public LineTool()
         {
-            this.ToolType = ToolType.Line;
-
+            ToolType = ToolType.Line;
+            _base_draw_tool = new BaseDrawTool();
         }
 
         public override void HandleDown(object arg)
@@ -28,40 +25,9 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             {
                 return;
             }
-
-            var coordinate = (Point)arg;
-
-            _path = new Path();
-            _pathGeometry = new PathGeometry();
-            _path.StrokeLineJoin = PenLineJoin.Bevel;
-
-            _path.Stroke = PocketPaintApplication.GetInstance().PaintData.colorSelected;
-            _path.StrokeThickness = PocketPaintApplication.GetInstance().PaintData.thicknessSelected;
-            _path.StrokeEndLineCap = PocketPaintApplication.GetInstance().PaintData.penLineCapSelected;
-            _path.StrokeStartLineCap = PocketPaintApplication.GetInstance().PaintData.penLineCapSelected;
-
-            _path.Data = _pathGeometry;
-            _pathFigureCollection = new PathFigureCollection();
-            _pathGeometry.Figures = _pathFigureCollection;
-            _pathFigure = new PathFigure();
-
-            _pathFigureCollection.Add(_pathFigure);
-            _lastPoint = coordinate;
-            _pathFigure.StartPoint = coordinate;
-            _pathSegmentCollection = new PathSegmentCollection();
-            _pathFigure.Segments = _pathSegmentCollection;
-
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(_path);
-
-            var rectangleGeometry = new RectangleGeometry
-            {
-                Rect = new Rect(0, 0, PocketPaintApplication.GetInstance().PaintingAreaCanvas.ActualWidth,
-                PocketPaintApplication.GetInstance().PaintingAreaCanvas.ActualHeight)
-            };
-            _path.Clip = rectangleGeometry;
-            _path.InvalidateArrange();
-            _path.InvalidateMeasure();
-            _lineSegment = new LineSegment();
+            
+            _line_segment = new LineSegment();
+            _base_draw_tool.HandleDown(arg);
         }
 
         public override void HandleMove(object arg)
@@ -72,22 +38,20 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             }
 
             var coordinate = (Point)arg;
-            _pathSegmentCollection.Remove(_lineSegment);
-            _lineSegment.Point = coordinate;
-            _pathSegmentCollection.Add(_lineSegment);
-
-            PocketPaintApplication.GetInstance().PaintingAreaLayoutRoot.InvalidateMeasure();
-            _path.InvalidateArrange();
+            _base_draw_tool._path_segment_collection.Remove(_line_segment);
+            _line_segment.Point = coordinate;
+            _base_draw_tool._path_segment_collection.Add(_line_segment);
         }
 
         public override void HandleUp(object arg)
         {
-            CommandManager.GetInstance().CommitCommand(new LineCommand(_path));            
+            _base_draw_tool.HandleUp(arg);
+           CommandManager.GetInstance().CommitCommand(new BaseDrawCommand(_base_draw_tool._path, _base_draw_tool._is_transparence_color_selected));            
         }
 
         public override void Draw(object o)
         {
-            
+            _base_draw_tool.Draw(o);
         }
 
         public override void ResetDrawingSpace()
