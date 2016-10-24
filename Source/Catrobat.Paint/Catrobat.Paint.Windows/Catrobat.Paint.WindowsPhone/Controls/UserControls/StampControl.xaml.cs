@@ -362,8 +362,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
                 TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
 
-                ttfMoveStampControl.X = (extremeLeftAndTopCoordinate.X - drawGrid.Margin.Left - image.Margin.Left) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetY - 20;
-                ttfMoveStampControl.Y = (extremeLeftAndTopCoordinate.Y - drawGrid.Margin.Top - image.Margin.Top) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetX - 20;
+                ttfMoveStampControl.X = workingSpaceTransformation.Value.OffsetX - (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace) - drawGrid.Margin.Left + image.Margin.Left - _widthStampControl;
+                ttfMoveStampControl.Y = workingSpaceTransformation.Value.OffsetY + (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace) - drawGrid.Margin.Top - image.Margin.Top;
 
                 RectangleShapeBase.addTransformation(ttfMoveStampControl);
             }
