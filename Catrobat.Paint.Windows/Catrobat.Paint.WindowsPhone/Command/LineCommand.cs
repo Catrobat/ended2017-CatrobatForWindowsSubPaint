@@ -1,34 +1,35 @@
 ﻿using Catrobat.Paint.WindowsPhone.Tool;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Shapes;
 
 namespace Catrobat.Paint.WindowsPhone.Command
 {
     class LineCommand : CommandBase
     {
-        
-        private Path Path { get; set; }
+        private Path _path;
+        private Canvas _painting_area_canvas;
 
         public LineCommand(Path path)
         {
             ToolType = ToolType.Line;
-            Path = path;
+            _path = path;
+            _painting_area_canvas = PocketPaintApplication.GetInstance().PaintingAreaCanvas;
         }
-
 
         public override bool ReDo()
         {
-            if (!PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Contains(Path))
+            if (!_painting_area_canvas.Children.Contains(_path))
             {
-                PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Add(Path);
+                _painting_area_canvas.Children.Add(_path);
             }
             return true;
         }
 
         public override bool UnDo()
         {
-            if (PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Contains(Path))
+            if (_painting_area_canvas.Children.Contains(_path))
             {
-                PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Remove(Path);
+                _painting_area_canvas.Children.Remove(_path);
                 return true;
             }
             return false;

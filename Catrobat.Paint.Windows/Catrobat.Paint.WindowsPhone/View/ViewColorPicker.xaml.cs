@@ -180,23 +180,24 @@ namespace Catrobat.Paint.WindowsPhone.View
                 PocketPaintApplication.GetInstance().EllipseSelectionControl.FillOfEllipseToDraw = current_solid_brush;
             }
 
-            if (PocketPaintApplication.GetInstance().isBrushTool)
-            {
-                if (current_color.A == 0)
-                {
-                    PocketPaintApplication.GetInstance().isBrushEraser = true;
-                    PocketPaintApplication.GetInstance().SwitchTool(ToolType.Eraser);
-                    PocketPaintApplication.GetInstance().isToolPickerUsed = false;
-                }
-                else
-                {
-                    PocketPaintApplication.GetInstance().isBrushEraser = false;
-                    if (PocketPaintApplication.GetInstance().ToolCurrent.GetToolType() == ToolType.Eraser)
-                    {
-                        PocketPaintApplication.GetInstance().SwitchTool(ToolType.Brush);
-                    }
-                }
-            }
+            //if (PocketPaintApplication.GetInstance().isBrushTool)
+            //{
+            //    if (current_color.A == 0)
+            //    {
+            //        PocketPaintApplication.GetInstance().isBrushEraser = true;
+            //        PocketPaintApplication.GetInstance().SwitchTool(ToolType.Eraser);
+            //        PocketPaintApplication.GetInstance().isToolPickerUsed = false;
+            //    }
+            //    else
+            //    {
+            //        PocketPaintApplication.GetInstance().isBrushEraser = false;
+            //        if (PocketPaintApplication.GetInstance().ToolCurrent.GetToolType() == ToolType.Eraser)
+            //        {
+            //            PocketPaintApplication.GetInstance().SwitchTool(ToolType.Brush);
+            //        }
+            //    }
+ 
+            //}
             if (PocketPaintApplication.GetInstance().ToolCurrent.GetToolType() == ToolType.Cursor)
             {
                 PocketPaintApplication.GetInstance().cursorControl.setCursorColor(current_color);

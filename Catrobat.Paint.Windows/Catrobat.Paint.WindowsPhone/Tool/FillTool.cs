@@ -12,9 +12,11 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 {
     class FillTool : ToolBase
     {
+        private object locker = null;
         public FillTool()
         {
-            ToolType = ToolType.Fill;    
+            ToolType = ToolType.Fill;
+            locker = null; 
         }
         public override void HandleDown(object arg)
         {
@@ -57,6 +59,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 Catrobat.Paint.WindowsPhone.Ui.Spinner.StopSpinning();
                 PocketPaintApplication.GetInstance().ProgressRing.IsActive = false;
             }
+            
         }
 
         public override void HandleMove(object arg)

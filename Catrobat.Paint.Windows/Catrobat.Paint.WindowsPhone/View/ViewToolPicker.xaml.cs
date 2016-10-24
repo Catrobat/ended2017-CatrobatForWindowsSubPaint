@@ -84,7 +84,6 @@ namespace Catrobat.Paint.WindowsPhone.View
                 if (pocketPaintApplication != null)
                 {
                     pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(false);
-                    pocketPaintApplication.isBrushEraser = false;
                     pocketPaintApplication.isBrushTool = false;
                     pocketPaintApplication.isToolPickerUsed = true;
                     bool enableEdgeTypes = false;
@@ -94,21 +93,16 @@ namespace Catrobat.Paint.WindowsPhone.View
                     switch (((Button)sender).Name)
                     {
                         case "BtnBrush":
-                            pocketPaintApplication.isBrushTool = true;
-                            pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
-                            if (pocketPaintApplication.PaintData.colorSelected.Color.A == 0)
+                            if(pocketPaintApplication.isBrushEraser)
                             {
-                                pocketPaintApplication.isBrushEraser = true;                                
                                 pocketPaintApplication.SwitchTool(ToolType.Eraser);
-                                pocketPaintApplication.isToolPickerUsed = false;
                             }
                             else
                             {
-
                                 pocketPaintApplication.SwitchTool(ToolType.Brush);
-                                pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
                                 pocketPaintApplication.isBrushTool = true;
                             }
+                            pocketPaintApplication.AppbarTop.BtnSelectedColorVisible(true);
                             break;
                         case "BtnCrop":
                             pocketPaintApplication.SwitchTool(ToolType.Crop);
