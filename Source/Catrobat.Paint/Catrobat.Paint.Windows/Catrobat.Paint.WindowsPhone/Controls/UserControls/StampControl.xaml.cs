@@ -594,9 +594,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 0)
             {
-                //double offsetX = ((_transformGridMain.Value.OffsetX + 5.0 + GridMain.Margin.Left) - tgPaintingAreaCheckeredGrid.Value.OffsetX) / 0.75;
-                //double offsetY = ((_transformGridMain.Value.OffsetY + 5.0 + GridMain.Margin.Top) - tgPaintingAreaCheckeredGrid.Value.OffsetY) / 0.75;
-
                 cornerCoordinates.X += GridMain.Margin.Left;
                 cornerCoordinates.Y += GridMain.Margin.Top;
 
@@ -610,25 +607,28 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 cornerCoordinates.X += (GridMain.Margin.Left + _widthStampControl);
                 cornerCoordinates.Y += GridMain.Margin.Top;
 
-                double offsetX = (cornerCoordinates.X - tgPaintingAreaCheckeredGrid.Value.OffsetY) / _scaleValueWorkingSpace;
-                double offsetY = (tgPaintingAreaCheckeredGrid.Value.OffsetX - cornerCoordinates.Y ) / _scaleValueWorkingSpace;
+                double offsetY = (tgPaintingAreaCheckeredGrid.Value.OffsetX - cornerCoordinates.X) / _scaleValueWorkingSpace;
+                double offsetX = (cornerCoordinates.Y - tgPaintingAreaCheckeredGrid.Value.OffsetY) / _scaleValueWorkingSpace;
 
                 return new Point(offsetX, offsetY);
             }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
             {
-                //double offsetX = (tgPaintingAreaCheckeredGrid.Value.OffsetX - (_transformGridMain.Value.OffsetX + _widthStampControl) + GridMain.Margin.Right) / 0.75;
-                //double offsetY = (tgPaintingAreaCheckeredGrid.Value.OffsetY - (_transformGridMain.Value.OffsetY + _heightStampControl) + GridMain.Margin.Bottom) / _scaleValueWorkingSpace;
+                cornerCoordinates.X += (GridMain.Margin.Left + _widthStampControl);
+                cornerCoordinates.Y += (GridMain.Margin.Top + _heightStampControl);
 
-                double offsetX = (tgPaintingAreaCheckeredGrid.Value.OffsetX - cornerCoordinates.X - _widthStampControl ) / _scaleValueWorkingSpace;
-                double offsetY = (tgPaintingAreaCheckeredGrid.Value.OffsetY - cornerCoordinates.Y - _heightStampControl) / _scaleValueWorkingSpace;
+                double offsetX = (tgPaintingAreaCheckeredGrid.Value.OffsetX - cornerCoordinates.X) / _scaleValueWorkingSpace;
+                double offsetY = (tgPaintingAreaCheckeredGrid.Value.OffsetY - cornerCoordinates.Y) / _scaleValueWorkingSpace;
 
                 return new Point(offsetX, offsetY);
             }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
             {
-                double offsetX = (tgPaintingAreaCheckeredGrid.Value.OffsetY + GridMain.Margin.Bottom - (_transformGridMain.Value.OffsetY + _heightStampControl)) / _scaleValueWorkingSpace;
-                double offsetY = (_transformGridMain.Value.OffsetX - tgPaintingAreaCheckeredGrid.Value.OffsetX + 5.0 + GridMain.Margin.Left) / _scaleValueWorkingSpace;
+                cornerCoordinates.X += GridMain.Margin.Left;
+                cornerCoordinates.Y += (GridMain.Margin.Top + _heightStampControl);
+
+                double offsetX = (tgPaintingAreaCheckeredGrid.Value.OffsetY - cornerCoordinates.Y) / _scaleValueWorkingSpace;
+                double offsetY = (cornerCoordinates.X - tgPaintingAreaCheckeredGrid.Value.OffsetX) / _scaleValueWorkingSpace;
                 return new Point(offsetX, offsetY);
             }
             else
