@@ -196,16 +196,19 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
                 TransformGroup workingSpaceTransformation =  PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
 
-                ttfMoveStampControl.X = (extremeLeftAndTopCoordinate.X - drawGrid.Margin.Left - image.Margin.Left) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetX - 20;
-                ttfMoveStampControl.Y = (extremeLeftAndTopCoordinate.Y - drawGrid.Margin.Top - image.Margin.Top) * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetY - 20;
+                ttfMoveStampControl.X = extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetX - drawGrid.Margin.Left - image.Margin.Left;
+                ttfMoveStampControl.Y = extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetY - drawGrid.Margin.Top - image.Margin.Top;
 
                 if (isWorkingSpaceFlippedHorizontally)
                 {
-                    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY - ((extremeLeftAndTopCoordinate.Y - drawGrid.Margin.Bottom - image.Margin.Bottom) * scaleValueWorkingSpace);
+                    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY - drawGrid.Margin.Top + image.Margin.Top - drawGrid.Height +
+                        ((currentPaintApplication.PaintingAreaCanvas.Height - extremeLeftAndTopCoordinate.Y) * scaleValueWorkingSpace);
                 }
-                else if (isWorkingSpaceFlippedVertically)
+
+                if (isWorkingSpaceFlippedVertically)
                 {
-                    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX - ((extremeLeftAndTopCoordinate.X - drawGrid.Margin.Right - image.Margin.Right) * scaleValueWorkingSpace);
+                    ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX - drawGrid.Margin.Left + image.Margin.Left - drawGrid.Width + 
+                        ((currentPaintApplication.PaintingAreaCanvas.Width - extremeLeftAndTopCoordinate.X) * scaleValueWorkingSpace);
                 }
 
                 RectangleShapeBase.addTransformation(ttfMoveStampControl);
@@ -257,16 +260,13 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             _transformGridMain.Children.Clear();
 
-            bool isWorkingSpaceFlippedHorizontally = paintingAreaCanvasTransformGroup != null && (int)paintingAreaCanvasTransformGroup.Value.M11 == -1;
-            bool isWorkingSpaceFlippedVertically = paintingAreaCanvasTransformGroup != null && (int)paintingAreaCanvasTransformGroup.Value.M22 == -1;
+            bool isWorkingSpaceFlippedVertically = paintingAreaCanvasTransformGroup != null && (int)paintingAreaCanvasTransformGroup.Value.M11 == -1;
+            bool isWorkingSpaceFlippedHorizontally = paintingAreaCanvasTransformGroup != null && (int)paintingAreaCanvasTransformGroup.Value.M22 == -1;
 
             FoundLeftPixel = false;
-            System.Diagnostics.Debug.WriteLine("flipped vertically: " + (int)gridWorkingSpaceTransformGroup.Value.M22 + " " + (int)gridWorkingSpaceTransformGroup.Value.M11 + " "
-                + (int)gridWorkingSpaceTransformGroup.Value.M12 + " " + (int)gridWorkingSpaceTransformGroup.Value.M21);
 
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 0)
             {
-                System.Diagnostics.Debug.WriteLine("scale: " + _scaleValueWorkingSpace + " " + gridWorkingSpaceTransformGroup.Value.M11);
                 if (gridWorkingSpaceTransformGroup != null)
                     _scaleValueWorkingSpace = gridWorkingSpaceTransformGroup.Value.M11;
                 _calculateAndSetStampControlPositionWithoutRotating(doubleBorderWidthValue, _scaleValueWorkingSpace, isWorkingSpaceFlippedHorizontally, isWorkingSpaceFlippedVertically);
