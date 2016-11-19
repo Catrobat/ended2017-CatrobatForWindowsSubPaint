@@ -183,8 +183,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                                                                                      extremeLeftAndTopCoordinate, extremeCoordinateOfTop);
 
                 // index starts with zero, so we have to add the value one.              
-                _heightStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0 + (image.Margin.Top * 2)) * scaleValueWorkingSpace;
-                _widthStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0 + (image.Margin.Left * 2)) * scaleValueWorkingSpace;
+                _heightStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0) * scaleValueWorkingSpace + image.Margin.Top + image.Margin.Bottom;
+                _widthStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0) * scaleValueWorkingSpace + image.Margin.Right + image.Margin.Left;
 
                 Grid drawGrid = (Grid)RectangleShapeBaseControl.FindName("AreaToDrawGrid");
 
@@ -323,27 +323,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                                                                                      extremeLeftAndTopCoordinate, xCoordinateOfExtremeTop);
 
                 //width and height reversed cause of 90 degree rotation
-                _widthStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0 + (image.Margin.Top * 2)) * scaleValueWorkingSpace;
-                _heightStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0 + (image.Margin.Left * 2)) * scaleValueWorkingSpace;
-
-
-                //if (isWorkingSpaceFlippedHorizontally)
-                //{
-                //    ttfMoveStampControl.X = positionXLeftTopCornerWorkingSpace + (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace);
-                //}
-                //else
-                //{
-                //    ttfMoveStampControl.X = positionXLeftTopCornerWorkingSpace + ((heightPaintingAreaCheckeredGrid - (extremeRightAndBottomCoordinate.Y + 1.0)) * scaleValueWorkingSpace);
-                //}
-
-                //if (isWorkingSpaceFlippedVertically)
-                //{
-                //    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + ((widthPaintingAreaCheckeredGrid - extremeRightAndBottomCoordinate.X) * scaleValueWorkingSpace);
-                //}
-                //else
-                //{
-                //    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY + (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace);
-                //}
+                _widthStampControl = (extremeRightAndBottomCoordinate.Y - extremeLeftAndTopCoordinate.Y + 1.0) * scaleValueWorkingSpace + image.Margin.Top + image.Margin.Bottom;
+                _heightStampControl = (extremeRightAndBottomCoordinate.X - extremeLeftAndTopCoordinate.X + 1.0) * scaleValueWorkingSpace + image.Margin.Right + image.Margin.Left;
 
                 Grid drawGrid = (Grid)RectangleShapeBaseControl.FindName("AreaToDrawGrid");
 
@@ -357,6 +338,18 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
                 ttfMoveStampControl.X = workingSpaceTransformation.Value.OffsetX - (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace) - drawGrid.Margin.Left + image.Margin.Left - _widthStampControl;
                 ttfMoveStampControl.Y = workingSpaceTransformation.Value.OffsetY + (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace) - drawGrid.Margin.Top - image.Margin.Top;
+
+                if (isWorkingSpaceFlippedHorizontally)
+                {
+                   ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX - drawGrid.Margin.Left - image.Margin.Left -
+                        ((currentPaintApplication.PaintingAreaCanvas.Height - extremeLeftAndTopCoordinate.Y) * scaleValueWorkingSpace);
+                }
+
+                if (isWorkingSpaceFlippedVertically)
+                {
+                    ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY - drawGrid.Margin.Top + image.Margin.Top - drawGrid.Height +
+                        ((currentPaintApplication.PaintingAreaCanvas.Width - extremeLeftAndTopCoordinate.X) * scaleValueWorkingSpace);
+                }
 
                 RectangleShapeBase.addTransformation(ttfMoveStampControl);
             }
