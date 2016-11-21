@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Catrobat.Paint.WindowsPhone.Tool;
 using System.Numerics;
 using System.Windows;
 
@@ -163,10 +164,27 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void rectEllipseForMovement_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Debug.Assert(AreaToDraw.Children.Count == 1);
+            ToolBase currentTool  = PocketPaintApplication.GetInstance().ToolCurrent;
+
+            if (currentTool.GetToolType().Equals(ToolType.Stamp))
+            {
+                var buttonName = (CommandBar)PocketPaintApplication.GetInstance().PaintingAreaView.BottomAppBar;
+
+                if(((AppBarButton)(buttonName.PrimaryCommands[0])).Visibility == Visibility.Visible)
+                {
+                    PocketPaintApplication.GetInstance().PaintingAreaView.app_btnStampCopy_Click(sender, e);
+                } else
+                {
+                    PocketPaintApplication.GetInstance().PaintingAreaView.app_btnStampPaste_Click(sender, e);
+                }
+                
+                return;
+            }
+
             UIElement elementToDraw = AreaToDraw.Children[0];
 
             var coord = e.GetPosition(PocketPaintApplication.GetInstance().GridWorkingSpace);
-            //var coord2 = e.GetPosition(elementToDraw);
+            
             var coord2 = e.GetPosition(AreaToDraw);
 
             var angle = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
@@ -201,7 +219,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
 
 
-            PocketPaintApplication.GetInstance().ToolCurrent.Draw(coord);
+            currentTool.Draw(coord);
         }
 
         private void resizeWidth(double deltaX, double deltaY, Orientation orientation)

@@ -846,7 +846,7 @@ namespace Catrobat.Paint.WindowsPhone.View
             ((CropTool)PocketPaintApplication.GetInstance().ToolCurrent).CropImage();
         }
 
-        void app_btnStampPaste_Click(object sender, RoutedEventArgs e)
+        public void app_btnStampPaste_Click(object sender, RoutedEventArgs e)
         {
             ((StampTool)PocketPaintApplication.GetInstance().ToolCurrent).StampPaste();
         }
@@ -890,7 +890,7 @@ namespace Catrobat.Paint.WindowsPhone.View
             ((StampTool)PocketPaintApplication.GetInstance().ToolCurrent).StampClear();
         }
 
-        void app_btnStampCopy_Click(object sender, RoutedEventArgs e)
+        public void app_btnStampCopy_Click(object sender, RoutedEventArgs e)
         {
             ((StampTool)PocketPaintApplication.GetInstance().ToolCurrent).StampCopy();
             CommandBar cmdBar = (CommandBar)BottomAppBar;

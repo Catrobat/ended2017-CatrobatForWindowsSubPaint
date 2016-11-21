@@ -636,11 +636,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             image.Source = imageSource;
         }
 
-        private void rectRectangleStampSelection_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ((StampTool)PocketPaintApplication.GetInstance().ToolCurrent).StampPaste();
-        }
-
         public void setHeightOfControl(double height)
         {
             _heightOfRectangle = height;
