@@ -54,7 +54,6 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             //System.Diagnostics.Debug.WriteLine("leftTop(Stampcopy): " + leftTopPointStampSelection);
             if (leftTopPointStampSelection.X < 0)
             {
-                // + and - = -
                 croppedImageWidth = widthStampControl + leftTopPointStampSelection.X;
             }
             if(leftTopPointStampSelection.Y < 0)

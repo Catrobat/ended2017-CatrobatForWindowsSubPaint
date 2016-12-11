@@ -272,16 +272,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                                             GridMainSelection.Margin.Right - deltaXRight,
                                             GridMainSelection.Margin.Bottom);
 
-            //var transform = rectRectangleToDraw.TransformToVisual(GridMainSelection);
-            //Point absolutePosition = transform.TransformPoint(new Point(0, 0));
 
-            //absolutePosition.X += rectRectangleToDraw.Width / 2;
-            //absolutePosition.Y += rectRectangleToDraw.Height / 2;
-
-            //RotateTransform rt;
-
-            //rt = new RotateTransform { Angle = m_rotation, CenterX = absolutePosition.X, CenterY = absolutePosition.Y };
-            //addTransformation(rt);
 
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnWidthValue = newWidthRectangleToDraw;
         }
