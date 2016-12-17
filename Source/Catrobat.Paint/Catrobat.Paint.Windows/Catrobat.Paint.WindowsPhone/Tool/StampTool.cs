@@ -42,16 +42,18 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
         public async void StampCopy()
         {
-            double heightStampControl = PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
-            double widthStampControl = PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
+            PocketPaintApplication currentPaintApplication = PocketPaintApplication.GetInstance();
 
-            heightStampControl -= (PocketPaintApplication.GetInstance().StampControl.image.Margin.Left * 2);
-            widthStampControl -= (PocketPaintApplication.GetInstance().StampControl.image.Margin.Top * 2);
+            double heightStampControl = currentPaintApplication.StampControl.GetHeightOfRectangleStampSelection();
+            double widthStampControl = currentPaintApplication.StampControl.GetWidthOfRectangleStampSelection();
+
+            heightStampControl -= (currentPaintApplication.StampControl.image.Margin.Left * 2);
+            widthStampControl -= (currentPaintApplication.StampControl.image.Margin.Top * 2);
             double croppedImageHeight = heightStampControl, croppedImageWidth = widthStampControl;
 
-            Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
+            Point leftTopPointStampSelection = currentPaintApplication.StampControl.GetLeftTopPointOfStampedSelection();
 
-            //System.Diagnostics.Debug.WriteLine("leftTop(Stampcopy): " + leftTopPointStampSelection);
+            //check if stamp control is beside the working space area
             if (leftTopPointStampSelection.X < 0)
             {
                 croppedImageWidth = widthStampControl + leftTopPointStampSelection.X;
@@ -61,11 +63,18 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 croppedImageHeight = heightStampControl + leftTopPointStampSelection.Y;
             }
 
-            double xOffsetStampControl = leftTopPointStampSelection.X + PocketPaintApplication.GetInstance().StampControl.image.Margin.Left;
-            double yOffsetStampControl = leftTopPointStampSelection.Y + PocketPaintApplication.GetInstance().StampControl.image.Margin.Top;
+            if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
+            {
+                double temp = croppedImageHeight;
+                croppedImageHeight = croppedImageWidth;
+                croppedImageWidth = temp;
+            }
+
+            double xOffsetStampControl = leftTopPointStampSelection.X + currentPaintApplication.StampControl.image.Margin.Left;
+            double yOffsetStampControl = leftTopPointStampSelection.Y + currentPaintApplication.StampControl.image.Margin.Top;
 
             string filename = "stamp" + ".png";
-            await PocketPaintApplication.GetInstance().StorageIo.WriteBitmapToPngMediaLibrary(filename);
+            await currentPaintApplication.StorageIo.WriteBitmapToPngMediaLibrary(filename);
             StorageFile storageFile = await KnownFolders.PicturesLibrary.GetFileAsync(filename);
             InMemoryRandomAccessStream mrAccessStream = new InMemoryRandomAccessStream();
 
@@ -79,8 +88,8 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                     BitmapDecoder decoder = await BitmapDecoder.CreateAsync(memStream.AsRandomAccessStream());
                     BitmapEncoder encoder = await BitmapEncoder.CreateForTranscodingAsync(mrAccessStream, decoder);
 
-                    encoder.BitmapTransform.ScaledHeight = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.RenderSize.Height;
-                    encoder.BitmapTransform.ScaledWidth = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.RenderSize.Width;
+                    encoder.BitmapTransform.ScaledHeight = (uint)currentPaintApplication.PaintingAreaCanvas.RenderSize.Height;
+                    encoder.BitmapTransform.ScaledWidth = (uint)currentPaintApplication.PaintingAreaCanvas.RenderSize.Width;
 
                     BitmapBounds bounds = new BitmapBounds
                     {
@@ -102,10 +111,12 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                         // ignored
                     }
                 }
+
                 //render the stream to the screen
                 WriteableBitmap wbCroppedBitmap = new WriteableBitmap((int)croppedImageWidth, (int)croppedImageHeight);
                 wbCroppedBitmap.SetSource(mrAccessStream);
-                PocketPaintApplication.GetInstance().StampControl.SetSourceImageStamp(wbCroppedBitmap);
+
+                currentPaintApplication.StampControl.SetSourceImageStamp(wbCroppedBitmap);
             }
         }
 
@@ -116,26 +127,35 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
         public void StampPaste()
         {
-            double heightStampControl = PocketPaintApplication.GetInstance().StampControl.GetHeightOfRectangleStampSelection();
-            double widthStampControl = PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
+            PocketPaintApplication currentPaintApplication = PocketPaintApplication.GetInstance();
 
-            heightStampControl -= (PocketPaintApplication.GetInstance().StampControl.image.Margin.Left * 2);
-            widthStampControl -= (PocketPaintApplication.GetInstance().StampControl.image.Margin.Top * 2);
+            double heightStampControl = currentPaintApplication.StampControl.GetHeightOfRectangleStampSelection();
+            double widthStampControl = currentPaintApplication.StampControl.GetWidthOfRectangleStampSelection();
 
-            Point leftTopPointStampSelection = PocketPaintApplication.GetInstance().StampControl.GetLeftTopPointOfStampedSelection();
-            double xCoordinateOnWorkingSpace =  leftTopPointStampSelection.X + PocketPaintApplication.GetInstance().StampControl.image.Margin.Left;
-            double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y + PocketPaintApplication.GetInstance().StampControl.image.Margin.Top;
+            heightStampControl -= (currentPaintApplication.StampControl.image.Margin.Left * 2);
+            widthStampControl -= (currentPaintApplication.StampControl.image.Margin.Top * 2);
+
+            Point leftTopPointStampSelection = currentPaintApplication.StampControl.GetLeftTopPointOfStampedSelection();
+            double xCoordinateOnWorkingSpace =  leftTopPointStampSelection.X + currentPaintApplication.StampControl.image.Margin.Left;
+            double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y + currentPaintApplication.StampControl.image.Margin.Top;
+
+            if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
+            {
+                double temp = heightStampControl;
+                heightStampControl = widthStampControl;
+                widthStampControl = temp;
+            }
 
             System.Diagnostics.Debug.WriteLine("xCoor: " + xCoordinateOnWorkingSpace + " " + yCoordinateOnWorkingSpace);
             Image stampedImage = new Image
             {
-                Source = PocketPaintApplication.GetInstance().StampControl.GetImageSourceStampedImage(),
+                Source = currentPaintApplication.StampControl.GetImageSourceStampedImage(),
                 Height = heightStampControl,
                 Width = widthStampControl,
                 Stretch = Stretch.Fill
             };
 
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(stampedImage, (int)(xCoordinateOnWorkingSpace), (int)(yCoordinateOnWorkingSpace));
+            currentPaintApplication.PaintingAreaView.addElementToPaintingAreCanvas(stampedImage, (int)(xCoordinateOnWorkingSpace), (int)(yCoordinateOnWorkingSpace));
             CommandManager.GetInstance().CommitCommand(new StampCommand((uint)xCoordinateOnWorkingSpace, (uint)yCoordinateOnWorkingSpace, stampedImage));
         }
 
