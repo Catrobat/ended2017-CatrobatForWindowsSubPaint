@@ -63,7 +63,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 croppedImageHeight = heightStampControl + leftTopPointStampSelection.Y;
             }
 
-            if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
+            if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
             {
                 double temp = croppedImageHeight;
                 croppedImageHeight = croppedImageWidth;
@@ -139,7 +139,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             double xCoordinateOnWorkingSpace =  leftTopPointStampSelection.X + currentPaintApplication.StampControl.image.Margin.Left;
             double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y + currentPaintApplication.StampControl.image.Margin.Top;
 
-            if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
+            if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
             {
                 double temp = heightStampControl;
                 heightStampControl = widthStampControl;

@@ -267,10 +267,10 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 deltaXRight = deltaXCorrected;
             }
-            ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left - deltaXLeft,
-                                            GridMainSelection.Margin.Top,
-                                            GridMainSelection.Margin.Right - deltaXRight,
-                                            GridMainSelection.Margin.Bottom);
+            //ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left - deltaXLeft,
+            //                                GridMainSelection.Margin.Top,
+            //                                GridMainSelection.Margin.Right - deltaXRight,
+            //                                GridMainSelection.Margin.Bottom);
 
 
 
@@ -321,10 +321,10 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 deltaYBottom = deltaYCorrected;
             }
-            ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left,
-                                            GridMainSelection.Margin.Top - deltaYTop,
-                                            GridMainSelection.Margin.Right,
-                                            GridMainSelection.Margin.Bottom - deltaYBottom);
+            //ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left,
+            //                                GridMainSelection.Margin.Top - deltaYTop,
+            //                                GridMainSelection.Margin.Right,
+            //                                GridMainSelection.Margin.Bottom - deltaYBottom);
 
  
 

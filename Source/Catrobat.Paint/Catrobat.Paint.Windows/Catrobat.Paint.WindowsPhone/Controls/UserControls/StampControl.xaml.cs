@@ -671,7 +671,26 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void SetSourceImageStamp(ImageSource imageSource)
         {
+            var currentPocketPaintApplication = PocketPaintApplication.GetInstance();
+
+            if (currentPocketPaintApplication.angularDegreeOfWorkingSpaceRotation != 0)
+            {
+                RotateTransform rt = new RotateTransform();
+                rt.Angle = currentPocketPaintApplication.angularDegreeOfWorkingSpaceRotation;
+
+                image.RenderTransformOrigin = new Point(0.5, 0.5);
+                image.RenderTransform = rt;
+
+                if (currentPocketPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPocketPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
+                {
+                    var temp = RectangleToDraw.Height;
+                    image.Height = RectangleToDraw.Width;
+                    image.Width = temp;
+                }
+            }
+
             image.Source = imageSource;
+            image.Stretch = Stretch.Fill;
         }
 
         public void setHeightOfControl(double height)
