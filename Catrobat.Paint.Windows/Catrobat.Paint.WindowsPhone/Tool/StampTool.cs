@@ -117,7 +117,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 Stretch = Stretch.Fill
             };
 
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(stampedImage, (int)(xCoordinateOnWorkingSpace + 5.0), (int)(yCoordinateOnWorkingSpace + 5.0));
+            PocketPaintApplication.GetInstance().PaintingAreaView.AddElementToPaintingAreCanvas(stampedImage, (int)(xCoordinateOnWorkingSpace + 5.0), (int)(yCoordinateOnWorkingSpace + 5.0));
             CommandManager.GetInstance().CommitCommand(new StampCommand((uint)xCoordinateOnWorkingSpace, (uint)yCoordinateOnWorkingSpace, stampedImage));
         }
 

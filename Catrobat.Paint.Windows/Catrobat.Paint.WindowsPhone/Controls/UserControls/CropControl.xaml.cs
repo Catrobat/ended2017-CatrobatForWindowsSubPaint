@@ -198,7 +198,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             for (int indexWidth = 0; indexWidth < (int)paintingAreaCanvasWidth; indexWidth++)
                 for (int indexHeight = 0; indexHeight < (int)paintingAreaCanvasHeight; indexHeight++)
                 {
-                    if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                    if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                     {
                         extremePoint.X = indexWidth;
                         foundLeftPixel = true;
@@ -210,7 +210,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 for (int indexHeight = 0; indexHeight < (int)paintingAreaCanvasHeight; indexHeight++)
                     for (int indexWidth = (int)paintingAreaCanvasWidth - 1; indexWidth >= (int)extremePoint.X; indexWidth--)
                     {
-                        if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                        if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                         {
                             extremePoint.Y = indexHeight;
                             xCoordinateOfExtremeTop = indexWidth;
@@ -237,7 +237,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 for (int indexWidth = (int)paintingAreaCanvasWidth - 1; indexWidth >= xCoordinateOfExtremeTop; indexWidth--)
                     for (int indexHeight = (int)paintingAreaCanvasHeight - 1; indexHeight >= extremeLeftAndTopCoordinate.Y; indexHeight--)
                     {
-                        if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                        if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                         {
                             extremePoint.X = indexWidth;
                             yCoordinateOfExtremeRight = indexHeight;
@@ -249,7 +249,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 for (int indexHeight = (int)paintingAreaCanvasHeight - 1; indexHeight >= yCoordinateOfExtremeRight; indexHeight--)
                     for (int indexWidth = (int)extremePoint.X; indexWidth >= (int)extremeLeftAndTopCoordinate.X; indexWidth--)
                     {
-                        if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                        if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                         {
                             extremePoint.Y = indexHeight;
                             indexHeight = 0;
@@ -803,7 +803,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void ResetAppBarButtonRectangleSelectionControl(bool activated)
         {
-            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.GetAppBarResetButton();
             if (appBarButtonReset != null)
             {
                 appBarButtonReset.IsEnabled = activated;
@@ -912,8 +912,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 image.Width = widthOfcroppedWorkingSpacePicture;
 
                 addImageToPaintingAreaCanvas(image);
-                currentPaintApplication.PaintingAreaView.setSizeOfPaintingAreaViewCheckered(heightOfcroppedWorkingSpacePicture, widthOfcroppedWorkingSpacePicture);
-                currentPaintApplication.PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+                currentPaintApplication.PaintingAreaView.SetSizeOfPaintingAreaViewCheckered(heightOfcroppedWorkingSpacePicture, widthOfcroppedWorkingSpacePicture);
+                currentPaintApplication.PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
                 setSizeOfPaintingAreaCanvas(heightOfcroppedWorkingSpacePicture, widthOfcroppedWorkingSpacePicture);
             }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90)
@@ -923,8 +923,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 image.Width = writeableBitmapToAdd.PixelWidth;
 
                 addImageToPaintingAreaCanvas(image);
-                currentPaintApplication.PaintingAreaView.setSizeOfPaintingAreaViewCheckered(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
-                currentPaintApplication.PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+                currentPaintApplication.PaintingAreaView.SetSizeOfPaintingAreaViewCheckered(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
+                currentPaintApplication.PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
                 setSizeOfPaintingAreaCanvas(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
             }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
@@ -936,8 +936,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 image.Width = widthOfcroppedWorkingSpacePicture;
 
                 addImageToPaintingAreaCanvas(image);
-                currentPaintApplication.PaintingAreaView.setSizeOfPaintingAreaViewCheckered(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
-                currentPaintApplication.PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+                currentPaintApplication.PaintingAreaView.SetSizeOfPaintingAreaViewCheckered(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
+                currentPaintApplication.PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
                 setSizeOfPaintingAreaCanvas(heigthOfcroppedWorkingSpacePicture, widthOfcroppedWorkingSpacePicture);
             }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
@@ -947,8 +947,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 image.Width = writeableBitmapToAdd.PixelWidth;
 
                 addImageToPaintingAreaCanvas(image);
-                currentPaintApplication.PaintingAreaView.setSizeOfPaintingAreaViewCheckered(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
-                currentPaintApplication.PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+                currentPaintApplication.PaintingAreaView.SetSizeOfPaintingAreaViewCheckered(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
+                currentPaintApplication.PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
                 setSizeOfPaintingAreaCanvas(writeableBitmapToAdd.PixelHeight, writeableBitmapToAdd.PixelWidth);
             }
             currentPaintApplication.CropControl.SetCropSelection();
@@ -1079,7 +1079,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                     }
                 }
             }
-            PocketPaintApplication.GetInstance().PaintingAreaView.drawCheckeredBackgroundInCheckeredCanvas(9);
+            PocketPaintApplication.GetInstance().PaintingAreaView.DrawCheckeredBackgroundInCheckeredCanvas(9);
         }
 
         async public void CropImageForCropCommand(uint offsetX, uint offsetY, uint height, uint width)

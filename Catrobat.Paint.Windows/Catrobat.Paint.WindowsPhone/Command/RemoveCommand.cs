@@ -1,7 +1,4 @@
-﻿using Catrobat.Paint.WindowsPhone.Tool;
-using Windows.UI.Xaml.Shapes;
-
-namespace Catrobat.Paint.WindowsPhone.Command
+﻿namespace Catrobat.Paint.WindowsPhone.Command
 {
     class RemoveCommand : CommandBase
     {
@@ -19,7 +16,7 @@ namespace Catrobat.Paint.WindowsPhone.Command
 
         public override bool UnDo()
         {
-            PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
             return true;
         }
     }

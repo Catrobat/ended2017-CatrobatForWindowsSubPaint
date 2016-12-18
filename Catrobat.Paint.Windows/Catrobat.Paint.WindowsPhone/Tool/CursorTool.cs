@@ -67,7 +67,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 _lastPoint = coordinate;
                 _path.Data = _pathGeometry;
 
-                PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(_path);
+                PocketPaintApplication.GetInstance().PaintingAreaView.AddElementToPaintingAreCanvas(_path);
 
                 var rectangleGeometry = new RectangleGeometry
                 {
@@ -122,7 +122,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
 
             if (PocketPaintApplication.GetInstance() != null)
             {
-                AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+                AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.GetAppBarResetButton();
                 if (appBarButtonReset != null)
                 {
                     if (!appBarButtonReset.IsEnabled)

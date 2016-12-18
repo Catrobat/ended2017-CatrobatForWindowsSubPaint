@@ -20,22 +20,22 @@ namespace Catrobat.Paint.WindowsPhone.Tool
         private PathSegmentCollection _pathSegmentCollection;
         private Point _lastPoint;
         private bool _lastPointSet;
-        private List<Point> points;
-        private PixelData.PixelData pixelDataEraser;
-        private PixelData.PixelData pixelData;
+        private List<Point> _points;
+        private PixelData.PixelData _pixelDataEraser;
+        private PixelData.PixelData _pixelData;
 
         public EraserTool()
         {
             ToolType = ToolType.Eraser;
             _lastPointSet = false;
-            points = new List<Point>();
-            pixelData = new PixelData.PixelData();
-            pixelDataEraser = new PixelData.PixelData();
-            initPathInstances();
-            initPathStrokeSettings();
+            _points = new List<Point>();
+            _pixelData = new PixelData.PixelData();
+            _pixelDataEraser = new PixelData.PixelData();
+            InitPathInstances();
+            InitPathStrokeSettings();
         }
 
-        private void initPathInstances()
+        private void InitPathInstances()
         {
             _path = new Path();
             _pathGeometry = new PathGeometry();
@@ -44,7 +44,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             _pathSegmentCollection = new PathSegmentCollection();
         }
 
-        private void initPathStrokeSettings()
+        private void InitPathStrokeSettings()
         {
             _path.StrokeLineJoin = PenLineJoin.Round;
             _path.Stroke = new SolidColorBrush(Color.FromArgb(0xff, 0xff, 0xff, 0xff));
@@ -53,19 +53,19 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             _path.StrokeEndLineCap = PocketPaintApplication.GetInstance().PaintData.penLineCapSelected;
         }
 
-        async public override void HandleDown(object arg)
+        public override async void HandleDown(object arg)
         {
             if (!(arg is Point))
             {
                 return;
             }
             _lastPointSet = false;
-            points = new List<Point>();
+            _points = new List<Point>();
             var coordinate = (Point)arg;
-            await pixelData.preparePaintingAreaCanvasPixel();
+            await _pixelData.preparePaintingAreaCanvasPixel();
 
-            initPathInstances();
-            initPathStrokeSettings();
+            InitPathInstances();
+            InitPathStrokeSettings();
 
             _pathFigure.StartPoint = coordinate;
             _pathFigure.Segments = _pathSegmentCollection;
@@ -74,7 +74,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             _lastPoint = coordinate;
             _path.Data = _pathGeometry;
 
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToEraserCanvas(_path);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AddElementToEraserCanvas(_path);
 
             var rectangleGeometry = new RectangleGeometry
             {
@@ -115,7 +115,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             }
         }
 
-        async public override void HandleUp(object arg)
+        public override async void HandleUp(object arg)
         {
             if (!(arg is Point))
             {
@@ -138,24 +138,24 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 _path.InvalidateArrange();
             }
            
-            int returnValue = await pixelDataEraser.preparePaintingAreaCanvasForEraser();
+            int returnValue = await _pixelDataEraser.PreparePaintingAreaCanvasForEraser();
             if (returnValue == 1)
                 throw new Exception("Preparing pixeldataeraser failed!");
-            points = pixelDataEraser.GetWhitePixels();
-            pixelData.SetPixel(points, "0_0_0_0");
+            _points = _pixelDataEraser.GetWhitePixels();
+            _pixelData.SetPixel(_points, "0_0_0_0");
             PocketPaintApplication.GetInstance().EraserCanvas.Children.Clear();
-            if(await pixelData.PixelBufferToBitmap())
-                CommandManager.GetInstance().CommitCommand(new EraserCommand(points));
+            if(await _pixelData.PixelBufferToBitmap())
+                CommandManager.GetInstance().CommitCommand(new EraserCommand(_points));
         }
-        async public override void Draw(object obj)
+        public override async void Draw(object obj)
         {
-            await pixelData.preparePaintingAreaCanvasPixel();
-            pixelDataEraser = new PixelData.PixelData();
-            await pixelDataEraser.preparePaintingAreaCanvasForEraser();
+            await _pixelData.preparePaintingAreaCanvasPixel();
+            _pixelDataEraser = new PixelData.PixelData();
+            await _pixelDataEraser.PreparePaintingAreaCanvasForEraser();
             List<Point> pointsToSet = ((List<Point>)obj);
-            pixelData.SetPixel(pointsToSet, "0_0_0_0");
+            _pixelData.SetPixel(pointsToSet, "0_0_0_0");
             PocketPaintApplication.GetInstance().EraserCanvas.Children.Clear();
-            var image = await pixelData.BufferToImage();
+            var image = await _pixelData.BufferToImage();
             PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Add(image);
         }
 

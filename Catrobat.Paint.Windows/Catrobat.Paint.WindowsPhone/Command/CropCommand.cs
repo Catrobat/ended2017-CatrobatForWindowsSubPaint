@@ -1,11 +1,8 @@
 ﻿using Catrobat.Paint.WindowsPhone.Tool;
 using System;
-using Windows.Graphics.Imaging;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Shapes;
 
 namespace Catrobat.Paint.WindowsPhone.Command
 {
@@ -42,7 +39,7 @@ namespace Catrobat.Paint.WindowsPhone.Command
             PocketPaintApplication.GetInstance().PaintingAreaCanvas.Height = Window.Current.Bounds.Height;
             PocketPaintApplication.GetInstance().PaintingAreaCanvas.Width = Window.Current.Bounds.Width;
             PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Add(imgTransparentPicture);
-            PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
             return true;                
         }
 

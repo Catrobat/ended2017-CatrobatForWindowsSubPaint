@@ -55,10 +55,10 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 PocketPaintApplication.GetInstance().GridImportImageSelectionControl.Visibility = Visibility.Visible;
             }
-            PocketPaintApplication.GetInstance().PaintingAreaView.changeVisibilityOfAppBars(Visibility.Visible);
-            PocketPaintApplication.GetInstance().PaintingAreaView.changeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Transparent, 1.0);
+            PocketPaintApplication.GetInstance().PaintingAreaView.ChangeVisibilityOfAppBars(Visibility.Visible);
+            PocketPaintApplication.GetInstance().PaintingAreaView.ChangeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Transparent, 1.0);
             PocketPaintApplication.GetInstance().PaintingAreaView.PickAFileButton_Click(sender, e);
-            PocketPaintApplication.GetInstance().PaintingAreaView.setActivityOfToolsControls(true);
+            PocketPaintApplication.GetInstance().PaintingAreaView.SetActivityOfToolsControls(true);
         }
 
         private void resetTools()
@@ -70,7 +70,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             PocketPaintApplication.GetInstance().PaintingAreaCanvas.RenderTransform = new TransformGroup();
             PocketPaintApplication.GetInstance().GridWorkingSpace.RenderTransform = new TransformGroup();
-            PocketPaintApplication.GetInstance().PaintingAreaView.disableToolbarsAndPaintingArea(false);
+            PocketPaintApplication.GetInstance().PaintingAreaView.DisableToolbarsAndPaintingArea(false);
         }
 
         private async void messageBoxNewDrawingSpace_Click()
@@ -117,7 +117,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             // TODO: Before you activate this line, implement the logic if the app is suspended.
             PocketPaintApplication.GetInstance().PhoneControl.Visibility = Visibility.Visible;
             PocketPaintApplication.GetInstance().PhoneControl.initPhotoControl();
-            PocketPaintApplication.GetInstance().PaintingAreaView.setActivityOfToolsControls(true);
+            PocketPaintApplication.GetInstance().PaintingAreaView.SetActivityOfToolsControls(true);
         }
     }
 }

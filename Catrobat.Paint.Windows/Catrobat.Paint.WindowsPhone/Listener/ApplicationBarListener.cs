@@ -18,15 +18,15 @@ namespace Catrobat.Paint.WindowsPhone.Listener
             if(PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Count == 0)
             {
                 // TODO: Write a method in the paintingareaview and do the following lines in this method.
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnabledOfASecondaryAppbarButton("appBarButtonClearWorkingSpace", false);
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnabledOfASecondaryAppbarButton("appbarButtonSave", false);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnabledOfASecondaryAppbarButton("appBarButtonClearWorkingSpace", false);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnabledOfASecondaryAppbarButton("appbarButtonSave", false);
             }
 
-            if(PocketPaintApplication.GetInstance().PaintingAreaView.isASelectionControlSelected())
+            if(PocketPaintApplication.GetInstance().PaintingAreaView.IsASelectionControlSelected())
             {
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Black, 0.5);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Black, 0.5);
             }
-            PocketPaintApplication.GetInstance().PaintingAreaView.checkAndUpdateStampAppBarButtons();
+            PocketPaintApplication.GetInstance().PaintingAreaView.CheckAndUpdateStampAppBarButtons();
         }
 
         public void BtnRedo_Click(object sender, RoutedEventArgs e)
@@ -35,10 +35,10 @@ namespace Catrobat.Paint.WindowsPhone.Listener
             // TODO: Maybe it would be better to swap out the following code to the paintingarea-file.
             if (PocketPaintApplication.GetInstance().PaintingAreaCanvas.Children.Count > 0)
             {
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnabledOfASecondaryAppbarButton("appBarButtonClearWorkingSpace", true);
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnabledOfASecondaryAppbarButton("appbarButtonSave", true);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnabledOfASecondaryAppbarButton("appBarButtonClearWorkingSpace", true);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnabledOfASecondaryAppbarButton("appbarButtonSave", true);
             }
-            PocketPaintApplication.GetInstance().PaintingAreaView.checkAndUpdateStampAppBarButtons();
+            PocketPaintApplication.GetInstance().PaintingAreaView.CheckAndUpdateStampAppBarButtons();
         }
 
         public void BtnColor_Click(object sender, RoutedEventArgs e)
@@ -59,8 +59,8 @@ namespace Catrobat.Paint.WindowsPhone.Listener
             {
                 //PocketPaintApplication.GetInstance().PaintingAreaView.setVisibilityGrdSliderThickness(Visibility.Collapsed);
                 PocketPaintApplication.GetInstance().SwitchTool(ToolType.Move);
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeVisibilityOfSelectionsControls(Visibility.Collapsed);
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Transparent, 1.0);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeVisibilityOfSelectionsControls(Visibility.Collapsed);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Transparent, 1.0);
             }
             else if (currentTooltype == ToolType.Move)
             {
@@ -69,12 +69,12 @@ namespace Catrobat.Paint.WindowsPhone.Listener
 
                 ToolType newSelectedTooltype = PocketPaintApplication.GetInstance().ToolWhileMoveTool.GetToolType();
                 PocketPaintApplication.GetInstance().SwitchTool(newSelectedTooltype);
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeVisibilityOfActiveSelectionControl(Visibility.Visible);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeVisibilityOfActiveSelectionControl(Visibility.Visible);
                 if (newSelectedTooltype == ToolType.Ellipse || newSelectedTooltype == ToolType.ImportPng || newSelectedTooltype == ToolType.Rect)
                 {
-                    PocketPaintApplication.GetInstance().PaintingAreaView.changeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Black, 0.5);
+                    PocketPaintApplication.GetInstance().PaintingAreaView.ChangeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Black, 0.5);
                 }
-                PocketPaintApplication.GetInstance().PaintingAreaView.resetActiveSelectionControl();
+                PocketPaintApplication.GetInstance().PaintingAreaView.ResetActiveSelectionControl();
             }
         }
 

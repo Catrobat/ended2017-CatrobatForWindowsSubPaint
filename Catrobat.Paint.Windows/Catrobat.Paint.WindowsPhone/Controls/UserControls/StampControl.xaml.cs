@@ -208,7 +208,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             for (int indexWidth = 0; indexWidth < (int)paintingAreaCanvasWidth; indexWidth++)
                 for (int indexHeight = 0; indexHeight < (int)paintingAreaCanvasHeight; indexHeight++)
                 {
-                    if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                    if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                     {
                         extremePoint.X = indexWidth;
                         FoundLeftPixel = true;
@@ -223,7 +223,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 for (int indexHeight = 0; indexHeight < (int)paintingAreaCanvasHeight; indexHeight++)
                     for (int indexWidth = (int)paintingAreaCanvasWidth - 1; indexWidth >= (int)extremePoint.X; indexWidth--)
                     {
-                        if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                        if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                         {
                             extremePoint.Y = indexHeight;
                             xCoordinateOfExtremeTop = indexWidth;
@@ -251,7 +251,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 for (int indexWidth = (int)paintingAreaCanvasWidth - 1; indexWidth >= xCoordinateOfExtremeTop; indexWidth--)
                     for (int indexHeight = (int)paintingAreaCanvasHeight - 1; indexHeight >= extremeLeftAndTopCoordinate.Y; indexHeight--)
                     {
-                        if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                        if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                         {
                             extremePoint.X = indexWidth;
                             yCoordinateOfExtremeRight = indexHeight;
@@ -265,7 +265,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 for (int indexHeight = (int)paintingAreaCanvasHeight - 1; indexHeight >= yCoordinateOfExtremeRight; indexHeight--)
                     for (int indexWidth = (int)extremePoint.X; indexWidth >= (int)extremeLeftAndTopCoordinate.X; indexWidth--)
                     {
-                        if (_pixelData.getPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
+                        if (_pixelData.GetPixelAlphaFromCanvas(indexWidth, indexHeight) != 0x00)
                         {
                             extremePoint.Y = indexHeight;
 
@@ -906,7 +906,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         private bool IsStampControlMovable()
         {
-            if(HasPaintingAreaCanvasElements() || PocketPaintApplication.GetInstance().PaintingAreaView.isAppBarButtonSelected("appBtnStampCopy"))
+            if(HasPaintingAreaCanvasElements() || PocketPaintApplication.GetInstance().PaintingAreaView.IsAppBarButtonSelected("appBtnStampCopy"))
             {
                 return true;
             }
@@ -955,7 +955,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void ResetAppBarButtonRectangleSelectionControl(bool activated)
         {
-            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.GetAppBarResetButton();
             if (appBarButtonReset != null)
             {
                 appBarButtonReset.IsEnabled = activated;

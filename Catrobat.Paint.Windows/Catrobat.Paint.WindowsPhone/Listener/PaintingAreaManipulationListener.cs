@@ -9,12 +9,11 @@ namespace Catrobat.Paint.WindowsPhone.Listener
 {
     class PaintingAreaManipulationListener 
     {
-        Point _lastPoint = new Point(0.0, 0.0);
-        RotateTransform rotate = new RotateTransform();
+        RotateTransform _rotate = new RotateTransform();
 
         public void ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
-            e.Mode.ToString();
+            
         }
         
         public void ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
@@ -44,15 +43,14 @@ namespace Catrobat.Paint.WindowsPhone.Listener
             object movezoom = null;
 
             RotateTransform rotate = new RotateTransform();
-            Point rotateCenterPoint = new Point();
             if (PocketPaintApplication.GetInstance().ToolCurrent.GetToolType() == ToolType.Rect)
             {
                 // TODO: @Karl: implement rotation for the rectangle tool
                 //rotateCenterPoint.X = PocketPaintApplication.GetInstance().RectangleSelectionControl.MainGrid.Width / 2.0;
                 //rotateCenterPoint.Y = PocketPaintApplication.GetInstance().RectangleSelectionControl.MainGrid.Height / 2.0;
 
-                //rotate.CenterX = rotateCenterPoint.X;
-                //rotate.CenterY = rotateCenterPoint.Y;
+                //_rotate.CenterX = rotateCenterPoint.X;
+                //_rotate.CenterY = rotateCenterPoint.Y;
 
                 //Point centerPoint = PocketPaintApplication.GetInstance().RectangleSelectionControl.getCenterCoordinateOfGridMain();
 
@@ -72,9 +70,9 @@ namespace Catrobat.Paint.WindowsPhone.Listener
                 //    double deltaAngle = (Math.Atan(normalPreviousX / normalPreviousY) - Math.Atan(normalCurrentX / normalCurrentY));
                 //    double rotationAngle = deltaAngle * 360.0 / Math.PI;
 
-                //    rotate.Angle = rotationAngle;
+                //    _rotate.Angle = rotationAngle;
                 //}
-                lastPoint = point;
+                LastPoint = point;
             }
             else if(PocketPaintApplication.GetInstance().ToolCurrent.GetToolType() == ToolType.Ellipse)
             {
@@ -82,8 +80,8 @@ namespace Catrobat.Paint.WindowsPhone.Listener
                 //rotateCenterPoint.X = PocketPaintApplication.GetInstance().EllipseSelectionControl.gridMain.Width / 2.0;
                 //rotateCenterPoint.Y = PocketPaintApplication.GetInstance().EllipseSelectionControl.gridMain.Height / 2.0;
 
-                //rotate.CenterX = rotateCenterPoint.X;
-                //rotate.CenterY = rotateCenterPoint.Y;
+                //_rotate.CenterX = rotateCenterPoint.X;
+                //_rotate.CenterY = rotateCenterPoint.Y;
 
                 //Point centerPoint = PocketPaintApplication.GetInstance().EllipseSelectionControl.getCenterCoordinateOfGridMain();
 
@@ -103,7 +101,7 @@ namespace Catrobat.Paint.WindowsPhone.Listener
                 //    double deltaAngle = (Math.Atan(normalPreviousX / normalPreviousY) - Math.Atan(normalCurrentX / normalCurrentY));
                 //    double rotationAngle = deltaAngle * 180.0 / Math.PI;
 
-                //    rotate.Angle = rotationAngle;
+                //    _rotate.Angle = rotationAngle;
                 //}
                 //lastPoint = point;
             }
@@ -113,8 +111,8 @@ namespace Catrobat.Paint.WindowsPhone.Listener
                 //rotateCenterPoint.X = PocketPaintApplication.GetInstance().RectangleSelectionControl.gridMain.Width / 2.0;
                 //rotateCenterPoint.Y = PocketPaintApplication.GetInstance().RectangleSelectionControl.gridMain.Height / 2.0;
 
-                //rotate.CenterX = rotateCenterPoint.X;
-                //rotate.CenterY = rotateCenterPoint.Y;
+                //_rotate.CenterX = rotateCenterPoint.X;
+                //_rotate.CenterY = rotateCenterPoint.Y;
 
                 //Point centerPoint = PocketPaintApplication.GetInstance().ImportImageSelectionControl.getCenterPointOfSelectionControl();
 
@@ -134,7 +132,7 @@ namespace Catrobat.Paint.WindowsPhone.Listener
                 //    double deltaAngle = (Math.Atan(normalPreviousX / normalPreviousY) - Math.Atan(normalCurrentX / normalCurrentY));
                 //    double rotationAngle = deltaAngle * 360.0 / Math.PI;
 
-                //    rotate.Angle = rotationAngle;
+                //    _rotate.Angle = rotationAngle;
                 //}
                 //lastPoint = point;
 
@@ -218,17 +216,7 @@ namespace Catrobat.Paint.WindowsPhone.Listener
             PocketPaintApplication.GetInstance().ToolCurrent.HandleUp(point);        
         }
 
-        public Point lastPoint
-        {
-            get
-            {
-                return _lastPoint;
-            }
-            set
-            {
-                _lastPoint = value;
-            }
-        }
+        public Point LastPoint { get; set; } = new Point(0.0, 0.0);
 
         public void ResetDrawingSpace()
         {
