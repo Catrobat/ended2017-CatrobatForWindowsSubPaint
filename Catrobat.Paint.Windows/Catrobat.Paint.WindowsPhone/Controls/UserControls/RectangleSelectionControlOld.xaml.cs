@@ -842,7 +842,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void resetAppBarButtonRectangleSelectionControl(bool isActivated)
         {
-            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.GetAppBarResetButton();
             if (appBarButtonReset != null)
             {
                 appBarButtonReset.IsEnabled = isActivated;
@@ -991,7 +991,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void resetRectangleSelectionControl()
         {
-            PocketPaintApplication.GetInstance().PaintingAreaManipulationListener.lastPoint = new Point(0.0, 0.0);
+            PocketPaintApplication.GetInstance().PaintingAreaManipulationListener.LastPoint = new Point(0.0, 0.0);
 
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnHeightValue = _rectangleToDrawSize;
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnWidthValue = _rectangleToDrawSize;

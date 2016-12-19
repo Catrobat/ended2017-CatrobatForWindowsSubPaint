@@ -14,19 +14,22 @@ namespace Catrobat.Paint.WindowsPhone.Command
         public override bool ReDo()
         {
             TransformGroup transformGroupWithAllKindOfTransforms = ((TransformGroup)PocketPaintApplication.GetInstance().GridWorkingSpace.RenderTransform);
-            if (_transformGroup.Children.Count == 0)
+            if (transformGroupWithAllKindOfTransforms != null)
             {
-                transformGroupWithAllKindOfTransforms.Children.Clear();
-                PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(null);
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnableOfAppBarButtonResetZoom(false);
-            }
-            else
-            {
-                for (int i = 0; i < _transformGroup.Children.Count; i++)
+                if (_transformGroup.Children.Count == 0)
                 {
-                    transformGroupWithAllKindOfTransforms.Children.Add(_transformGroup.Children[i]);
+                    transformGroupWithAllKindOfTransforms.Children.Clear();
+                    PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
+                    PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnableOfAppBarButtonResetZoom(false);
                 }
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnableOfAppBarButtonResetZoom(true);
+                else
+                {
+                    for (int i = 0; i < _transformGroup.Children.Count; i++)
+                    {
+                        transformGroupWithAllKindOfTransforms.Children.Add(_transformGroup.Children[i]);
+                    }
+                    PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnableOfAppBarButtonResetZoom(true);
+                }
             }
             PocketPaintApplication.GetInstance().GridWorkingSpace.RenderTransform = transformGroupWithAllKindOfTransforms;
             PocketPaintApplication.GetInstance().GridWorkingSpace.UpdateLayout();
@@ -40,19 +43,22 @@ namespace Catrobat.Paint.WindowsPhone.Command
         {
             if (CommandManager.GetInstance().doesCommandTypeExistInUndoList(typeof(ZoomCommand)))
             {
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnableOfAppBarButtonResetZoom(true);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnableOfAppBarButtonResetZoom(true);
             }
             else
             {
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeEnableOfAppBarButtonResetZoom(false);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeEnableOfAppBarButtonResetZoom(false);
             }
             TransformGroup transformGroup = ((TransformGroup)PocketPaintApplication.GetInstance().GridWorkingSpace.RenderTransform);
 
-            transformGroup.Children.Clear();
+            if (transformGroup != null)
+            {
+                transformGroup.Children.Clear();
 
-            PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(null);
+                PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
 
-            PocketPaintApplication.GetInstance().GridWorkingSpace.RenderTransform = transformGroup;
+                PocketPaintApplication.GetInstance().GridWorkingSpace.RenderTransform = transformGroup;
+            }
             PocketPaintApplication.GetInstance().GridWorkingSpace.UpdateLayout();
             PocketPaintApplication.GetInstance().GridWorkingSpace.InvalidateArrange();
             PocketPaintApplication.GetInstance().GridWorkingSpace.InvalidateMeasure();

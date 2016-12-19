@@ -60,7 +60,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             }
             else
             {
-                PocketPaintApplication.GetInstance().PaintingAreaView.resetTools();
+                PocketPaintApplication.GetInstance().PaintingAreaView.ResetTools();
             }
 
             //PocketPaintApplication.GetInstance().SwitchTool(ToolType.Brush);

@@ -79,7 +79,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                     PocketPaintApplication.GetInstance().RectangleSelectionControl.StrokeLineJoinOfRectangleToDraw,
                 Data = myRectGeometry
             };
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(m_path);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AddElementToPaintingAreCanvas(m_path);
 
             var rectangleGeometry = new RectangleGeometry
             {

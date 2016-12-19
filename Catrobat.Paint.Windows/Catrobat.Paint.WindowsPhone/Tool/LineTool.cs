@@ -51,7 +51,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             _pathSegmentCollection = new PathSegmentCollection();
             _pathFigure.Segments = _pathSegmentCollection;
 
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(_path);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AddElementToPaintingAreCanvas(_path);
 
             var rectangleGeometry = new RectangleGeometry
             {

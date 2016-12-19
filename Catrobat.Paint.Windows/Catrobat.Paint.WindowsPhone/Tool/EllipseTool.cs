@@ -21,7 +21,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             if (PocketPaintApplication.GetInstance() != null 
                 && PocketPaintApplication.GetInstance().PaintingAreaView != null)
             {
-                PocketPaintApplication.GetInstance().PaintingAreaView.setVisibilityOfUcEllipseSelectionControl 
+                PocketPaintApplication.GetInstance().PaintingAreaView.SetVisibilityOfUcEllipseSelectionControl 
                     = Visibility.Visible;
             }
         }
@@ -66,7 +66,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             m_path.StrokeLineJoin = PocketPaintApplication.GetInstance().EllipseSelectionControl
                 .StrokeLineJoinOfEllipseToDraw;
             m_path.Data = myEllipseGeometry;
-            PocketPaintApplication.GetInstance().PaintingAreaView.addElementToPaintingAreCanvas(m_path);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AddElementToPaintingAreCanvas(m_path);
 
             var rectangleGeometry = new RectangleGeometry
             {

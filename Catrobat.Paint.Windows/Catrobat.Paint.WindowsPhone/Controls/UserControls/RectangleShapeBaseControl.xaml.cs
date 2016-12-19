@@ -387,7 +387,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             var paintingAreaView = PocketPaintApplication.GetInstance().PaintingAreaView;
             if (paintingAreaView != null)
             {
-                var appBarButtonReset = paintingAreaView.getAppBarResetButton();
+                var appBarButtonReset = paintingAreaView.GetAppBarResetButton();
                 if (appBarButtonReset != null)
                 {
                     appBarButtonReset.IsEnabled = isActivated;

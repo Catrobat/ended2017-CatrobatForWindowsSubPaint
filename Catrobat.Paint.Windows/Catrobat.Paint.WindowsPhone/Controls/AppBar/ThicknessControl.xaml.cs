@@ -15,79 +15,78 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
     /// </summary>
     public sealed partial class ThicknessControl
     {
-        Int32 slider_thickness_textbox_last_value = 1;
-        double width_multiplicator = PocketPaintApplication.GetInstance().size_width_multiplication;
-        double height_multiplicator = PocketPaintApplication.GetInstance().size_width_multiplication;
+        Int32 _SliderThicknessTextboxLastValue = 1;
+        double _multiplicator = PocketPaintApplication.GetInstance().size_width_multiplication;
 
         public ThicknessControl()
         {
-            this.InitializeComponent();
-            setLayout();
+            InitializeComponent();
+            SetLayout();
         }
 
-        private void setLayout()
+        private void SetLayout()
         {
-            GrdLayoutRoot.Width *= width_multiplicator;
-            GrdLayoutRoot.Height *= height_multiplicator;
-            GrdThicknessKeyboard.Width *= width_multiplicator;
-            GrdThicknessKeyboard.Height *= height_multiplicator;
+            GrdLayoutRoot.Width *= _multiplicator;
+            GrdLayoutRoot.Height *= _multiplicator;
+            GrdThicknessKeyboard.Width *= _multiplicator;
+            GrdThicknessKeyboard.Height *= _multiplicator;
 
-            GrdSliderThickness.Width *= width_multiplicator;
-            GrdSliderThickness.Height *= height_multiplicator;
+            GrdSliderThickness.Width *= _multiplicator;
+            GrdSliderThickness.Height *= _multiplicator;
             GrdSliderThickness.Margin = new Thickness(
-                                            GrdSliderThickness.Margin.Left * width_multiplicator,
-                                            GrdSliderThickness.Margin.Top * height_multiplicator,
-                                            GrdSliderThickness.Margin.Right * width_multiplicator,
-                                            GrdSliderThickness.Margin.Bottom * height_multiplicator);
+                                            GrdSliderThickness.Margin.Left * _multiplicator,
+                                            GrdSliderThickness.Margin.Top * _multiplicator,
+                                            GrdSliderThickness.Margin.Right * _multiplicator,
+                                            GrdSliderThickness.Margin.Bottom * _multiplicator);
 
             foreach (Object obj in GrdLayoutRoot.Children.Concat(GrdBrushType.Children.Concat(GrdSlider.Children.Concat(GrdThicknessKeyboard.Children))))
             {
                 if (obj.GetType() == typeof(Button))
                 {
                     Button button = ((Button)obj);
-                    button.Height *= height_multiplicator;
-                    button.Width *= width_multiplicator;
+                    button.Height *= _multiplicator;
+                    button.Width *= _multiplicator;
 
                     button.Margin = new Thickness(
-                                            button.Margin.Left * width_multiplicator,
-                                            button.Margin.Top * height_multiplicator,
-                                            button.Margin.Right * width_multiplicator,
-                                            button.Margin.Bottom * height_multiplicator);
+                                            button.Margin.Left * _multiplicator,
+                                            button.Margin.Top * _multiplicator,
+                                            button.Margin.Right * _multiplicator,
+                                            button.Margin.Bottom * _multiplicator);
 
-                    button.FontSize *= height_multiplicator;
+                    button.FontSize *= _multiplicator;
 
                     var buttonContent = ((Button)obj).Content;
-                    if (buttonContent != null && buttonContent.GetType() == typeof(Image))
+                    if (buttonContent != null && buttonContent is Image)
                     {
                         Image contentImage = (Image)buttonContent;
-                        contentImage.Height *= height_multiplicator;
-                        contentImage.Width *= width_multiplicator;
+                        contentImage.Height *= _multiplicator;
+                        contentImage.Width *= _multiplicator;
 
                         contentImage.Margin = new Thickness(
-                                                contentImage.Margin.Left * width_multiplicator,
-                                                contentImage.Margin.Top * height_multiplicator,
-                                                contentImage.Margin.Right * width_multiplicator,
-                                                contentImage.Margin.Bottom * height_multiplicator);
+                                                contentImage.Margin.Left * _multiplicator,
+                                                contentImage.Margin.Top * _multiplicator,
+                                                contentImage.Margin.Right * _multiplicator,
+                                                contentImage.Margin.Bottom * _multiplicator);
                     }
                 }
-                else if (obj.GetType() == typeof(Slider))
+                else if (obj is Slider)
                 {
                     Slider slider = (Slider)obj;
-                    slider.Height *= height_multiplicator;
-                    slider.Width *= width_multiplicator;
+                    slider.Height *= _multiplicator;
+                    slider.Width *= _multiplicator;
 
                     slider.Margin = new Thickness(
-                                            slider.Margin.Left * width_multiplicator,
-                                            slider.Margin.Top * height_multiplicator,
-                                            slider.Margin.Right * width_multiplicator,
-                                            slider.Margin.Bottom * height_multiplicator);
+                                            slider.Margin.Left * _multiplicator,
+                                            slider.Margin.Top * _multiplicator,
+                                            slider.Margin.Right * _multiplicator,
+                                            slider.Margin.Bottom * _multiplicator);
                 }
             }
 
             SliderThickness.Value = PocketPaintApplication.GetInstance().PaintData.thicknessSelected;
         }
 
-        public void checkAndSetPenLineCap(PenLineCap penLineCap)
+        public void CheckAndSetPenLineCap(PenLineCap penLineCap)
         {
             SolidColorBrush brushGray = new SolidColorBrush(Colors.Gray);
             SolidColorBrush brushWhite = new SolidColorBrush(Colors.Black);
@@ -116,7 +115,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
             var penLineCap = PenLineCap.Round;
             PocketPaintApplication.GetInstance().PaintData.penLineCapSelected = penLineCap;
             PocketPaintApplication.GetInstance().cursorControl.changeCursorType(penLineCap);
-            checkAndSetPenLineCap(penLineCap);
+            CheckAndSetPenLineCap(penLineCap);
         }
 
         public void SquareButton_OnClick(object sender, RoutedEventArgs e)
@@ -124,15 +123,15 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
             var penLineCap = PenLineCap.Square;
             PocketPaintApplication.GetInstance().PaintData.penLineCapSelected = penLineCap;
             PocketPaintApplication.GetInstance().cursorControl.changeCursorType(penLineCap);
-            checkAndSetPenLineCap(penLineCap);
+            CheckAndSetPenLineCap(penLineCap);
         }
 
-        public void setValueBtnBrushThickness(int value)
+        public void SetValueBtnBrushThickness(int value)
         {
             BtnBrushThickness.Content = value.ToString();
         }
 
-        public void setValueSliderThickness(double value)
+        public void SetValueSliderThickness(double value)
         {
             SliderThickness.Value = value;
         }
@@ -142,7 +141,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
             var penLineCap = PenLineCap.Triangle;
             PocketPaintApplication.GetInstance().PaintData.penLineCapSelected = penLineCap;
             PocketPaintApplication.GetInstance().cursorControl.changeCursorType(penLineCap);
-            checkAndSetPenLineCap(penLineCap);
+            CheckAndSetPenLineCap(penLineCap);
         }
 
         private void SliderThickness_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -150,7 +149,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
             if (SliderThickness != null)
             {
                 BtnBrushThickness.Content = Convert.ToInt32(SliderThickness.Value).ToString();
-                slider_thickness_textbox_last_value = Convert.ToInt32(SliderThickness.Value);
+                _SliderThicknessTextboxLastValue = Convert.ToInt32(SliderThickness.Value);
                 PocketPaintApplication.GetInstance().PaintData.thicknessSelected = Convert.ToInt32(SliderThickness.Value);
                 if (PocketPaintApplication.GetInstance().cursorControl != null)
                 {
@@ -164,21 +163,21 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
             Button button = sender as Button;
             if (button != null)
             {
-                string get_clicked_button_number = button.Name.Substring(8);
+                string getClickedButtonNumber = button.Name.Substring(8);
                 if (BtnBrushThickness.Content == null || BtnBrushThickness.Content.ToString().Length < 2)
                 {
-                    BtnBrushThickness.Content += get_clicked_button_number;
+                    BtnBrushThickness.Content += getClickedButtonNumber;
                 }
                 else if (BtnBrushThickness.Content.ToString().Length == 2)
                 {
                     BtnBrushThickness.Content = "";
-                    BtnBrushThickness.Content += get_clicked_button_number;
+                    BtnBrushThickness.Content += getClickedButtonNumber;
                 }
-                checkIfValueIsInRange(false);
+                CheckIfValueIsInRange();
             }
         }
 
-        private void checkIfValueIsInRange(bool pressed_accept)
+        private void CheckIfValueIsInRange()
         {
             if (BtnBrushThickness.Content == null)
             {
@@ -261,44 +260,43 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
                 BtnBrushThickness.Content = BtnBrushThickness.Content.ToString().Remove(BtnBrushThickness.Content.ToString().Length - 1);
             }
 
-            checkIfValueIsInRange(false);
+            CheckIfValueIsInRange();
         }
 
         private void btnAccept_Click(object sender, RoutedEventArgs e)
         {
-            checkIfThicknessWasEntered();
-            checkIfValueIsInRange(true);
+            CheckIfThicknessWasEntered();
+            CheckIfValueIsInRange();
 
             GrdThicknessKeyboard.Visibility = Visibility.Collapsed;
             GrdSliderThickness.Margin = new Thickness(0.0, 0.0, 0.0, 0.0);
         }
 
-        public void checkIfThicknessWasEntered()
+        public void CheckIfThicknessWasEntered()
         {
-            string slider_thickness_text_box_value = string.Empty;
+            string sliderThicknessTextBoxValue = string.Empty;
             if (BtnBrushThickness.Content != null)
             {
-                slider_thickness_text_box_value = BtnBrushThickness.Content.ToString();
+                sliderThicknessTextBoxValue = BtnBrushThickness.Content.ToString();
             }
-            Int32 slider_thickness_text_box_int_value;
 
-            if (!slider_thickness_text_box_value.Equals(""))
+            if (!sliderThicknessTextBoxValue.Equals(""))
             {
-                slider_thickness_text_box_int_value = Convert.ToInt32(slider_thickness_text_box_value);
+                var sliderThicknessTextBoxIntValue = Convert.ToInt32(sliderThicknessTextBoxValue);
 
-                if (!(slider_thickness_text_box_int_value >= 1 && slider_thickness_text_box_int_value <= 50))
+                if (!(sliderThicknessTextBoxIntValue >= 1 && sliderThicknessTextBoxIntValue <= 50))
                 {
-                    BtnBrushThickness.Content = slider_thickness_textbox_last_value.ToString();
+                    BtnBrushThickness.Content = _SliderThicknessTextboxLastValue.ToString();
                 }
                 else
                 {
-                    slider_thickness_textbox_last_value = slider_thickness_text_box_int_value;
-                    SliderThickness.Value = slider_thickness_text_box_int_value;
+                    _SliderThicknessTextboxLastValue = sliderThicknessTextBoxIntValue;
+                    SliderThickness.Value = sliderThicknessTextBoxIntValue;
                 }
             }
             else
             {
-                BtnBrushThickness.Content = slider_thickness_textbox_last_value.ToString();
+                BtnBrushThickness.Content = _SliderThicknessTextboxLastValue.ToString();
             }
 
             BtnBrushThickness.Foreground = new SolidColorBrush(Colors.White);
@@ -306,11 +304,11 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
 
         private void BtnBrushThickness_Click(object sender, RoutedEventArgs e)
         {
-            checkIfThicknessWasEntered();
+            CheckIfThicknessWasEntered();
             if (GrdThicknessKeyboard.Visibility == Visibility.Collapsed)
             {
                 GrdThicknessKeyboard.Visibility = Visibility.Visible;
-                GrdSliderThickness.Margin = new Thickness(0.0, 0.0, 0.0, (180.0 * height_multiplicator));
+                GrdSliderThickness.Margin = new Thickness(0.0, 0.0, 0.0, (180.0 * _multiplicator));
             }
             else
             {

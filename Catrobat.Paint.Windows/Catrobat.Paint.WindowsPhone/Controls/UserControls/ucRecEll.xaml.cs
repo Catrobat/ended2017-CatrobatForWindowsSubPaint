@@ -131,9 +131,9 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 
                 if(PocketPaintApplication.GetInstance().ToolCurrent.GetToolType() == ToolType.ImportPng)
                 {
-                    PocketPaintApplication.GetInstance().PaintingAreaView.visibilityGridEllRecControl = Visibility.Collapsed;
+                    PocketPaintApplication.GetInstance().PaintingAreaView.VisibilityGridEllRecControl = Visibility.Collapsed;
                     PocketPaintApplication.GetInstance().InfoBoxActionControl.Visibility = Visibility.Visible;
-                    PocketPaintApplication.GetInstance().PaintingAreaView.changeVisibilityOfAppBars(Visibility.Collapsed);
+                    PocketPaintApplication.GetInstance().PaintingAreaView.ChangeVisibilityOfAppBars(Visibility.Collapsed);
                 }
                 else
                 {

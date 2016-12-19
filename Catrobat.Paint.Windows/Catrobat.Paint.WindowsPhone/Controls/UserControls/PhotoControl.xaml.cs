@@ -171,7 +171,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             else
             {
                 PocketPaintApplication.GetInstance().ImportImageSelectionControl.imageSourceOfRectangleToDraw = imageBrush;
-                PocketPaintApplication.GetInstance().PaintingAreaView.changeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Black, 0.5);
+                PocketPaintApplication.GetInstance().PaintingAreaView.ChangeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Black, 0.5);
             }
             closePhoneControl(sender, e);
         }
@@ -183,7 +183,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         public void closePhoneControl(object sender, RoutedEventArgs e)
         {
             PocketPaintApplication.GetInstance().PhoneControl.Visibility = Visibility.Collapsed;
-            PocketPaintApplication.GetInstance().PaintingAreaView.changeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Transparent, 1.0);
+            PocketPaintApplication.GetInstance().PaintingAreaView.ChangeBackgroundColorAndOpacityOfPaintingAreaCanvas(Colors.Transparent, 1.0);
             PocketPaintApplication.GetInstance().PaintingAreaView.BottomAppBar.Visibility = Visibility.Visible;
             PocketPaintApplication.GetInstance().AppbarTop.Visibility = Visibility.Visible;
 

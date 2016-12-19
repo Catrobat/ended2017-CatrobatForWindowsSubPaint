@@ -500,7 +500,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void resetAppBarButtonRectangleSelectionControl(bool activated)
         {
-            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.GetAppBarResetButton();
             if (appBarButtonReset != null)
             {
                 appBarButtonReset.IsEnabled = activated;

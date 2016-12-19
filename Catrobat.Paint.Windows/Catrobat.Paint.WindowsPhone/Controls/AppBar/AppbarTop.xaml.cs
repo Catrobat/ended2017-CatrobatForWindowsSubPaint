@@ -1,5 +1,6 @@
 ﻿using Catrobat.Paint.WindowsPhone.Tool;
 using System;
+using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,87 +19,42 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
     {
         public AppbarTop()
         {
-            this.InitializeComponent();
-            setAppBarTopLayout();
+            InitializeComponent();
+            SetAppBarTopLayout();
         }
-        private void setAppBarTopLayout()
+        private void SetAppBarTopLayout()
         {
-            double width_multiplicator = PocketPaintApplication.GetInstance().size_width_multiplication;
-            double height_multiplicator = PocketPaintApplication.GetInstance().size_width_multiplication;
-            GrdLayoutRoot.Width *= width_multiplicator;
-            GrdLayoutRoot.Height *= height_multiplicator;
+            double multiplicator = PocketPaintApplication.GetInstance().size_width_multiplication;
+            GrdLayoutRoot.Width *= multiplicator;
+            GrdLayoutRoot.Height *= multiplicator;
 
-            foreach (Object obj in GrdLayoutRoot.Children)
+            foreach (var element in GrdLayoutRoot.Children.Where(obj => obj is Button || obj is Ellipse || obj is Rectangle).Cast<FrameworkElement>())
             {
-                if (obj.GetType() == typeof(AppBarButton))
-                {
-                    ((AppBarButton)obj).Height *= height_multiplicator;
-                    ((AppBarButton)obj).Width *= width_multiplicator;
+                element.Height *= multiplicator;
+                element.Width *= multiplicator;
 
-                    ((AppBarButton)obj).Margin = new Thickness(
-                                            ((AppBarButton)obj).Margin.Left * width_multiplicator,
-                                            ((AppBarButton)obj).Margin.Top * height_multiplicator,
-                                            ((AppBarButton)obj).Margin.Right * width_multiplicator,
-                                            ((AppBarButton)obj).Margin.Bottom * height_multiplicator);
-                }
-                else if (obj.GetType() == typeof(Button))
-                {
-                    ((Button)obj).Height *= height_multiplicator;
-                    ((Button)obj).Width *= width_multiplicator;
-
-                    ((Button)obj).Margin = new Thickness(
-                                            ((Button)obj).Margin.Left * width_multiplicator,
-                                            ((Button)obj).Margin.Top * height_multiplicator,
-                                            ((Button)obj).Margin.Right * width_multiplicator,
-                                            ((Button)obj).Margin.Bottom * height_multiplicator);
-                }
-                else if (obj.GetType() == typeof(Ellipse))
-                {
-                    ((Ellipse)obj).Height *= height_multiplicator;
-                    ((Ellipse)obj).Width *= width_multiplicator;
-
-                    ((Ellipse)obj).Margin = new Thickness(
-                                            ((Ellipse)obj).Margin.Left * width_multiplicator,
-                                            ((Ellipse)obj).Margin.Top * height_multiplicator,
-                                            ((Ellipse)obj).Margin.Right * width_multiplicator,
-                                            ((Ellipse)obj).Margin.Bottom * height_multiplicator);
-                }
-                else if (obj.GetType() == typeof(Rectangle))
-                {
-                    ((Rectangle)obj).Height *= height_multiplicator;
-                    ((Rectangle)obj).Width *= width_multiplicator;
-
-                    ((Rectangle)obj).Margin = new Thickness(
-                                            ((Rectangle)obj).Margin.Left * width_multiplicator,
-                                            ((Rectangle)obj).Margin.Top * height_multiplicator,
-                                            ((Rectangle)obj).Margin.Right * width_multiplicator,
-                                            ((Rectangle)obj).Margin.Bottom * height_multiplicator);
-                }
+                element.Margin = new Thickness(
+                    element.Margin.Left * multiplicator,
+                    element.Margin.Top * multiplicator,
+                    element.Margin.Right * multiplicator,
+                    element.Margin.Bottom * multiplicator);
             }
 
-            ImgTransparence.Width *= width_multiplicator;
-            ImgTransparence.Height *= height_multiplicator;
+            ImgTransparence.Width *= multiplicator;
+            ImgTransparence.Height *= multiplicator;
             ImgTransparence.Margin = new Thickness(
-                                        ImgTransparence.Margin.Left * width_multiplicator,
-                                        ImgTransparence.Margin.Top * height_multiplicator,
-                                        ImgTransparence.Margin.Right * width_multiplicator,
-                                        ImgTransparence.Margin.Bottom * height_multiplicator);
+                                        ImgTransparence.Margin.Left * multiplicator,
+                                        ImgTransparence.Margin.Top * multiplicator,
+                                        ImgTransparence.Margin.Right * multiplicator,
+                                        ImgTransparence.Margin.Bottom * multiplicator);
 
-            RecSelectedColor.Width *= width_multiplicator;
-            RecSelectedColor.Height *= height_multiplicator;
-            RecSelectedColor.Margin = new Thickness(
-                                        RecSelectedColor.Margin.Left * width_multiplicator,
-                                        RecSelectedColor.Margin.Top * height_multiplicator,
-                                        RecSelectedColor.Margin.Right * width_multiplicator,
-                                        RecSelectedColor.Margin.Bottom * height_multiplicator);
-
-            GrdBtnSelectedColor.Height *= height_multiplicator;
-            GrdBtnSelectedColor.Width *= width_multiplicator;
+            GrdBtnSelectedColor.Height *= multiplicator;
+            GrdBtnSelectedColor.Width *= multiplicator;
 
             BtnSelectedColor.Background = PocketPaintApplication.GetInstance().PaintData.colorSelected;
             PocketPaintApplication.GetInstance().PaintData.colorChanged += ColorChangedHere;
             PocketPaintApplication.GetInstance().PaintData.toolCurrentChanged += ToolChangedHere;
-            this.GrdLayoutRoot.Background = new SolidColorBrush(Color.FromArgb(255, 25, 165, 184));
+            GrdLayoutRoot.Background = new SolidColorBrush(Color.FromArgb(255, 25, 165, 184));
             PocketPaintApplication.GetInstance().AppbarTop = this;
              
 
@@ -126,15 +82,17 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
 
         public void ToolChangedHere(ToolBase tool)
         {
-            ImageBrush img_front = new ImageBrush();
-            ImageBrush img_behind = new ImageBrush();
-            img_behind.ImageSource = new BitmapImage(
-                   new Uri("ms-resource:/Files/Assets/ToolMenu/icon_menu_move.png", UriKind.Absolute));
+            ImageBrush imgFront = new ImageBrush();
+            ImageBrush imgBehind = new ImageBrush
+            {
+                ImageSource = new BitmapImage(
+                    new Uri("ms-resource:/Files/Assets/ToolMenu/icon_menu_move.png", UriKind.Absolute))
+            };
 
             Visibility currentStateOfGridThicknessControl = PocketPaintApplication.GetInstance().GrdThicknessControlState;
             PocketPaintApplication.GetInstance().PaintingAreaView.GrdThicknessControlVisibility = Visibility.Collapsed;
 
-            if(tool.GetToolType() == ToolType.Eraser && PocketPaintApplication.GetInstance().isBrushEraser == true)
+            if(tool.GetToolType() == ToolType.Eraser && PocketPaintApplication.GetInstance().isBrushEraser)
             {
                 tool = new BrushTool();
             }
@@ -149,71 +107,69 @@ namespace Catrobat.Paint.WindowsPhone.Controls.AppBar
             switch (tool.GetToolType())
             {
                 case ToolType.Brush:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Brush));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Brush));
                     PocketPaintApplication.GetInstance().PaintingAreaView.GrdThicknessControlVisibility
                         = currentStateOfGridThicknessControl;
                     break;
                 case ToolType.Crop:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Crop));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Crop));
                     PocketPaintApplication.GetInstance().PaintingAreaView.GrdThicknessControlVisibility
                         = currentStateOfGridThicknessControl;
                     break;
                 case ToolType.Cursor:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Cursor));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Cursor));
                     break;
                 case ToolType.Ellipse:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Ellipse));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Ellipse));
                     break;
                 case ToolType.Eraser:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Eraser));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Eraser));
                     break;
                 case ToolType.Fill:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Fill));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Fill));
                     PocketPaintApplication.GetInstance().PaintingAreaView.GrdThicknessControlVisibility
                         = currentStateOfGridThicknessControl;
                     break;
                 case ToolType.Flip:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Flip));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Flip));
                     break;
                 case ToolType.ImportPng:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.ImportPng));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.ImportPng));
                     PocketPaintApplication.GetInstance().PaintingAreaView.GrdThicknessControlVisibility
                         = currentStateOfGridThicknessControl;
                     break;
                 case ToolType.Line:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Line));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Line));
                     PocketPaintApplication.GetInstance().PaintingAreaView.GrdThicknessControlVisibility
                         = currentStateOfGridThicknessControl;
                     break;
                 case ToolType.Move:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Move));
-                    img_behind.ImageSource = new BitmapImage(
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Move));
+                    imgBehind.ImageSource = new BitmapImage(
                      GetToolImageUri(PocketPaintApplication.GetInstance().ToolWhileMoveTool.GetToolType()));
                     break;
                 case ToolType.Pipette:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Pipette));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Pipette));
                     break;
                 case ToolType.Rect:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Rect));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Rect));
                     break;
                 case ToolType.Rotate:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Rotate));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Rotate));
                     break;
                 case ToolType.Stamp:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Stamp));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Stamp));
                     break;
                 case ToolType.Zoom:
-                    img_front.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Zoom));
+                    imgFront.ImageSource = new BitmapImage(GetToolImageUri(ToolType.Zoom));
                     break;
-                default:
-                    // TODO: BtnMoveScreen.ImageSource = null;
+                // TODO: BtnMoveScreen.ImageSource = null;
                     // TODO: BtnMoveScreen.Background = null;
-                    break;
             }
 
             ellipseTool_behind.Opacity = 0.1;
-            ellipseTool_behind.Fill = img_behind;
-            ellipseTool_front.Fill = img_front;
+            ellipseTool_behind.Fill = imgBehind;
+            ellipseTool_front.Fill = imgFront;
         }
 
         public void BtnSelectedColorVisible(bool enable)

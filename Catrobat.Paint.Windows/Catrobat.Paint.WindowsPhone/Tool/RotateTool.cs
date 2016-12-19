@@ -47,8 +47,8 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             rotateTransform.Angle = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
             rotateTransform.CenterX = (PocketPaintApplication.GetInstance().GridWorkingSpace.Width) / 2;
             rotateTransform.CenterY = ((PocketPaintApplication.GetInstance().GridWorkingSpace.Height) / 2);
-            PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(null);
-            PocketPaintApplication.GetInstance().PaintingAreaView.enableResetButtonRotate(PocketPaintApplication.GetInstance().PaintingAreaView.getRotationCounter() * (-1));
+            PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(null);
+            PocketPaintApplication.GetInstance().PaintingAreaView.EnableResetButtonRotate(PocketPaintApplication.GetInstance().PaintingAreaView.GetRotationCounter() * (-1));
         }
 
         public void proofBoundariesOfAngle(int angleValue)
@@ -71,7 +71,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             proofBoundariesOfAngle(rotationAngle);
             RotateTransform rtRotationGridWorkingSpace = PocketPaintApplication.GetInstance().PaintingAreaView.CreateRotateTransform(PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation,
                 new Point(PocketPaintApplication.GetInstance().GridWorkingSpace.Width / 2.0, PocketPaintApplication.GetInstance().GridWorkingSpace.Height / 2.0));
-            PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(rtRotationGridWorkingSpace);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(rtRotationGridWorkingSpace);
             addRotationToCommandManager(rtRotationGridWorkingSpace, -1);
         }
 
@@ -81,7 +81,7 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             proofBoundariesOfAngle(rotationAngle);
             RotateTransform rtRotationGridWorkingSpace = PocketPaintApplication.GetInstance().PaintingAreaView.CreateRotateTransform(PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation,
                 new Point(PocketPaintApplication.GetInstance().GridWorkingSpace.Width / 2.0, PocketPaintApplication.GetInstance().GridWorkingSpace.Height / 2.0));
-            PocketPaintApplication.GetInstance().PaintingAreaView.alignPositionOfGridWorkingSpace(rtRotationGridWorkingSpace);
+            PocketPaintApplication.GetInstance().PaintingAreaView.AlignPositionOfGridWorkingSpace(rtRotationGridWorkingSpace);
             addRotationToCommandManager(rtRotationGridWorkingSpace, 1);
         }
 
