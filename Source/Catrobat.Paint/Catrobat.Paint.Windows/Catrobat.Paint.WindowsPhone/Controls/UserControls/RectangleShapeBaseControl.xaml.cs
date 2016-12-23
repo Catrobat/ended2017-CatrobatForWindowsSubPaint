@@ -51,9 +51,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             IsModifiedRectangleForMovement = false;
 
-            //var marginValueLeftAndRight = (Window.Current.Bounds.Width - GridMainSelection.Width) / 2;
-            //var marginValueTopAndBottom = (Window.Current.Bounds.Height - GridMainSelection.Height) / 2;
-            //GridMainSelection.Margin = new Thickness(marginValueLeftAndRight, marginValueTopAndBottom, marginValueLeftAndRight, marginValueTopAndBottom);
         }
 
         public bool IsModifiedRectangleForMovement { get; set; }
@@ -184,9 +181,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                     coord.Y += (AreaToDraw.Height / 2);
                     break;
             }
-
-
-
             currentTool.Draw(coord);
         }
 
@@ -235,13 +229,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 deltaXRight = deltaXCorrected;
             }
-            //ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left - deltaXLeft,
-            //                                GridMainSelection.Margin.Top,
-            //                                GridMainSelection.Margin.Right - deltaXRight,
-            //                                GridMainSelection.Margin.Bottom);
-
-
-
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnWidthValue = newWidthRectangleToDraw;
         }
 
@@ -289,13 +276,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 deltaYBottom = deltaYCorrected;
             }
-            //ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left,
-            //                                GridMainSelection.Margin.Top - deltaYTop,
-            //                                GridMainSelection.Margin.Right,
-            //                                GridMainSelection.Margin.Bottom - deltaYBottom);
-
- 
-
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnHeightValue = newHeightRectangleToDraw;
         }
 
@@ -468,18 +448,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             IsModifiedRectangleForMovement = false;
             PocketPaintApplication.GetInstance().StampControl.HorizontalAlignment = HorizontalAlignment.Center;
             PocketPaintApplication.GetInstance().StampControl.VerticalAlignment = VerticalAlignment.Center;
-
-            // TODO: evaluate if the outcommented code is needed
-            //PocketPaintApplication.GetInstance().PaintingAreaManipulationListener.lastPoint = new Point(0.0, 0.0);
-            //RotateTransform rotate = new RotateTransform();
-            //var angle = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
-            //rotate.Angle = -angle;
-            //Point point = new Point(0.5, 0.5);
-            //PocketPaintApplication.GetInstance().RectangleSelectionControl.RenderTransformOrigin = point;
-            //PocketPaintApplication.GetInstance().RectangleSelectionControl.RenderTransform = rotate;
-
-            //PocketPaintApplication.GetInstance().EllipseSelectionControl.RenderTransformOrigin = point;
-            //PocketPaintApplication.GetInstance().EllipseSelectionControl.RenderTransform = rotate;
         }
 
         private void TopLeftGrid_OnManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)

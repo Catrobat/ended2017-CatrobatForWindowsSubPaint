@@ -45,26 +45,29 @@
                 Visibility="Collapsed"
                 />
 
-            <Rectangle
-                x:Name="AreaToDrawStamp"
-                Width="{Binding ElementName=AreaToDrawGrid,
-                                Path=Width}"
-                Height="{Binding ElementName=AreaToDrawGrid,
-                                 Path=Height}"
-                Margin="0,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Stroke="CornflowerBlue"
-                StrokeLineJoin="Miter"
-                StrokeThickness="3"
-                Visibility="Visible"
-                >
-                <Rectangle.Fill>
-                    <ImageBrush
+            <Border
+                x:Name="StampBorder"
+                BorderThickness="3"
+                BorderBrush="CornflowerBlue"
+                Margin="-3">
+                <Rectangle
+                    x:Name="AreaToDrawStamp"
+                    Width="{Binding ElementName=AreaToDrawGrid,
+                                    Path=Width}"
+                    Height="{Binding ElementName=AreaToDrawGrid,
+                                     Path=Height}"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Visibility="Visible"
+                    >
+                    <Rectangle.Fill>
+                        <ImageBrush
                         x:Name="imgBrush"
                         />
-                </Rectangle.Fill>
-            </Rectangle>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
 
             <Ellipse
                 x:Name="AreaToDrawEllipse"
