@@ -54,18 +54,17 @@
                 Margin="0,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Fill="Transparent"
                 Stroke="CornflowerBlue"
                 StrokeLineJoin="Miter"
                 StrokeThickness="3"
                 Visibility="Visible"
-                />
-
-            <Image
-                x:Name="imgStampedImage"
-                Margin="3,3,3,3"
-                Stretch="Fill"
-                />
+                >
+                <Rectangle.Fill>
+                    <ImageBrush
+                        x:Name="imgBrush"
+                        />
+                </Rectangle.Fill>
+            </Rectangle>
 
             <Ellipse
                 x:Name="AreaToDrawEllipse"

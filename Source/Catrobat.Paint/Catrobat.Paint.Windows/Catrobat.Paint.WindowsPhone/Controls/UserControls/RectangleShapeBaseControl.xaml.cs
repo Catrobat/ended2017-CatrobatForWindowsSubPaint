@@ -51,9 +51,9 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             IsModifiedRectangleForMovement = false;
 
-            var marginValueLeftAndRight = (Window.Current.Bounds.Width - GridMainSelection.Width) / 2;
-            var marginValueTopAndBottom = (Window.Current.Bounds.Height - GridMainSelection.Height) / 2;
-            GridMainSelection.Margin = new Thickness(marginValueLeftAndRight, marginValueTopAndBottom, marginValueLeftAndRight, marginValueTopAndBottom);
+            //var marginValueLeftAndRight = (Window.Current.Bounds.Width - GridMainSelection.Width) / 2;
+            //var marginValueTopAndBottom = (Window.Current.Bounds.Height - GridMainSelection.Height) / 2;
+            //GridMainSelection.Margin = new Thickness(marginValueLeftAndRight, marginValueTopAndBottom, marginValueLeftAndRight, marginValueTopAndBottom);
         }
 
         public bool IsModifiedRectangleForMovement { get; set; }
@@ -111,40 +111,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         {
             var translateTransform = new TranslateTransform();
 
-            // TODO: Fix bug of translation when rotated in certain positions. remove then the comments
-            //RotateTransform lastRotateTransform = GetLastRotateTransformation();
-
-            //var deltaX = e.Delta.Translation.X;
-            //var deltaY = e.Delta.Translation.Y;
-            //var rotationRadian = PocketPaintApplication.DegreeToRadian(m_RotationAngle);
-            //var deltaXCorrected = Math.Cos(-rotationRadian) * (deltaX)
-            //        - Math.Sin(-rotationRadian) * (deltaY);
-            //var deltaYCorrected = Math.Sin(-rotationRadian) * (deltaX)
-            //        + Math.Cos(-rotationRadian) * (deltaY);
-            //var xVal = deltaXCorrected;
-            //var yVal = deltaYCorrected;
-
             var xVal = e.Delta.Translation.X;
             var yVal = e.Delta.Translation.Y;
-
-            //if(xVal >= 0 && yVal >= 0)
-            //{
-            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal, 
-            //        GridMainSelection.Margin.Right - xVal , GridMainSelection.Margin.Bottom - yVal);
-            //} else if(xVal >= 0 && yVal < 0)
-            //{
-            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal,
-            //        GridMainSelection.Margin.Right - xVal, GridMainSelection.Margin.Bottom - yVal);
-            //} else if(xVal < 0 && yVal >= 0) 
-            //{
-            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal,
-            //        GridMainSelection.Margin.Right - xVal, GridMainSelection.Margin.Bottom - yVal);
-            //}
-            //else
-            //{
-            //    GridMainSelection.Margin = new Thickness(GridMainSelection.Margin.Left + xVal, GridMainSelection.Margin.Top + yVal,
-            //        GridMainSelection.Margin.Right - xVal, GridMainSelection.Margin.Bottom - yVal);
-            //}
 
             m_CenterPointRotation.X += xVal;
             m_CenterPointRotation.Y += yVal;
@@ -461,19 +429,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             }
         }
 
-        public double heightOfRectangleToDraw
-        {
-            get
-            {
-                return AreaToDrawGrid.Height;
-            }
-            set
-            {
-                AreaToDrawGrid.Height = value;
-            }
-            
-        }
-
         public void SetWidthOfControl(double newWidthRectangleToDraw)
         {
             //TODO 1 is maybe too small?
@@ -481,25 +436,9 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 GridMainSelection.Width = newWidthRectangleToDraw + (GridMainSelection.Width - AreaToDrawGrid.Width);
                 MovementRectangle.Width = newWidthRectangleToDraw + (MovementRectangle.Width - AreaToDrawGrid.Width);
-                AreaToDrawGrid.Width = newWidthRectangleToDraw;
+                AreaToDrawGrid.Width = newWidthRectangleToDraw;                
                 PocketPaintApplication.GetInstance().StampControl.setWidthOfControl(newWidthRectangleToDraw);
             }
-        }
-        public double widthOfRectangleToDraw
-        {
-            get
-            {
-                return AreaToDrawGrid.Width;
-            }
-            set
-            {
-                AreaToDrawGrid.Width = value;
-            }
-        }
-
-        private void ChangeMarginOfGridMainSelection(double leftMargin, double topMargin, double rightMargin, double bottomMargin)
-        {
-            GridMainSelection.Margin = new Thickness(leftMargin, topMargin, rightMargin, bottomMargin);
         }
 
         public void ResetRectangleShapeBaseControl()
