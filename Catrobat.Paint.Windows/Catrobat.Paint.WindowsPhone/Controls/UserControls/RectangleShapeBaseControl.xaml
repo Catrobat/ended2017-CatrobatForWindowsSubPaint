@@ -17,6 +17,8 @@
         Width="290"
         Height="290"
         Margin="0,0,0,0"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
         >
 
         <Grid
@@ -42,6 +44,30 @@
                 StrokeThickness="3"
                 Visibility="Collapsed"
                 />
+
+            <Border
+                x:Name="StampBorder"
+                BorderThickness="3"
+                BorderBrush="CornflowerBlue"
+                Margin="-3">
+                <Rectangle
+                    x:Name="AreaToDrawStamp"
+                    Width="{Binding ElementName=AreaToDrawGrid,
+                                    Path=Width}"
+                    Height="{Binding ElementName=AreaToDrawGrid,
+                                     Path=Height}"
+                    Margin="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Visibility="Visible"
+                    >
+                    <Rectangle.Fill>
+                        <ImageBrush
+                            x:Name="imgBrush"
+                        />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
 
             <Ellipse
                 x:Name="AreaToDrawEllipse"
@@ -144,8 +170,8 @@
             Height="35"
             Margin="30,0,0,30"
             HorizontalAlignment="Left"
-            Background="Transparent"
             VerticalAlignment="Bottom"
+            Background="Transparent"
             ManipulationDelta="BottomLeftGrid_OnManipulationDelta"
             ManipulationMode="TranslateX, TranslateY"
             >
@@ -232,9 +258,9 @@
         <Grid
             Width="75"
             Height="50"
-            Margin="-45,210,0,0"
+            Margin="-45,0,0,30"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Bottom"
             Background="Transparent"
             ManipulationDelta="RotationBottomLeft_OnManipulationDelta"
             ManipulationMode="TranslateX, TranslateY"
@@ -262,9 +288,9 @@
             x:Name="BottomLeftRotationGrid"
             Width="120"
             Height="50"
-            Margin="-45,260,0,-20"
+            Margin="-45,0,0,-20"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Bottom"
             Background="Transparent"
             ManipulationDelta="RotationBottomLeft_OnManipulationDelta"
             ManipulationMode="TranslateX, TranslateY"
@@ -289,9 +315,9 @@
         <Grid
             Width="75"
             Height="50"
-            Margin="260,210,-45,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            Margin="0,0,-45,30"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
             Background="Transparent"
             ManipulationDelta="RotationBottomRight_OnManipulationDelta"
             ManipulationMode="TranslateX, TranslateY"
@@ -301,9 +327,9 @@
             x:Name="BottomRightRotationGrid"
             Width="120"
             Height="50"
-            Margin="215,260,-45,-20"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            Margin="0,0,-45,-20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
             Background="Transparent"
             ManipulationDelta="RotationBottomRight_OnManipulationDelta"
             ManipulationMode="TranslateX, TranslateY"
@@ -332,8 +358,8 @@
             Height="35"
             Margin="0,0,30,30"
             HorizontalAlignment="Right"
-            Background="Transparent"
             VerticalAlignment="Bottom"
+            Background="Transparent"
             ManipulationDelta="BottomRightGrid_OnManipulationDelta"
             ManipulationMode="TranslateX, TranslateY"
             >
