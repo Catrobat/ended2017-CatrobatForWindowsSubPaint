@@ -47,8 +47,6 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             double heightStampControl = currentPaintApplication.StampControl.GetHeightOfRectangleStampSelection();
             double widthStampControl = currentPaintApplication.StampControl.GetWidthOfRectangleStampSelection();
 
-            heightStampControl -= (currentPaintApplication.StampControl.RectangleToDraw.Margin.Left * 2);
-            widthStampControl -= (currentPaintApplication.StampControl.RectangleToDraw.Margin.Top * 2);
             double croppedImageHeight = heightStampControl, croppedImageWidth = widthStampControl;
 
             Point leftTopPointStampSelection = currentPaintApplication.StampControl.GetLeftTopPointOfStampedSelection();
@@ -70,8 +68,8 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 croppedImageWidth = temp;
             }
 
-            double xOffsetStampControl = leftTopPointStampSelection.X + currentPaintApplication.StampControl.RectangleToDraw.Margin.Left;
-            double yOffsetStampControl = leftTopPointStampSelection.Y + currentPaintApplication.StampControl.RectangleToDraw.Margin.Top;
+            double xOffsetStampControl = leftTopPointStampSelection.X;
+            double yOffsetStampControl = leftTopPointStampSelection.Y;
 
             string filename = "stamp" + ".png";
             await currentPaintApplication.StorageIo.WriteBitmapToPngMediaLibrary(filename);
@@ -132,12 +130,9 @@ namespace Catrobat.Paint.WindowsPhone.Tool
             double heightStampControl = currentPaintApplication.StampControl.GetHeightOfRectangleStampSelection();
             double widthStampControl = currentPaintApplication.StampControl.GetWidthOfRectangleStampSelection();
 
-            heightStampControl -= (currentPaintApplication.StampControl.RectangleToDraw.Margin.Left * 2);
-            widthStampControl -= (currentPaintApplication.StampControl.RectangleToDraw.Margin.Top * 2);
-
             Point leftTopPointStampSelection = currentPaintApplication.StampControl.GetLeftTopPointOfStampedSelection();
-            double xCoordinateOnWorkingSpace =  leftTopPointStampSelection.X + currentPaintApplication.StampControl.RectangleToDraw.Margin.Left;
-            double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y + currentPaintApplication.StampControl.RectangleToDraw.Margin.Top;
+            double xCoordinateOnWorkingSpace = leftTopPointStampSelection.X;
+            double yCoordinateOnWorkingSpace = leftTopPointStampSelection.Y;
 
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90 || currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
             {
@@ -146,7 +141,6 @@ namespace Catrobat.Paint.WindowsPhone.Tool
                 widthStampControl = temp;
             }
 
-            System.Diagnostics.Debug.WriteLine("xCoor: " + xCoordinateOnWorkingSpace + " " + yCoordinateOnWorkingSpace);
             Image stampedImage = new Image
             {
                 Source = currentPaintApplication.StampControl.GetImageSourceStampedImage(),
