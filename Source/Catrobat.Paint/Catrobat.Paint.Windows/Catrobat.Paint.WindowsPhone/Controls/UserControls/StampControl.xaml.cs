@@ -236,6 +236,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void ResetCurrentCopiedSelection()
         {
+            PocketPaintApplication.GetInstance().StampControl.Visibility = Visibility.Collapsed;
             imgBrush.ImageSource = null;
             RectangleShapeBaseControl.ResetRectangleShapeBaseControl();
         }
