@@ -198,7 +198,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 RectangleShapeBaseControl.SetHeightOfControl(_heightStampControl);
                 RectangleShapeBaseControl.SetWidthOfControl(_widthStampControl);
 
-                TransformGroup workingSpaceTransformation =  PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
+                TransformGroup workingSpaceTransformation =  PocketPaintApplication.GetInstance().PaintingAreaView.GetGridWorkingSpaceTransformGroup();
 
                 ttfMoveStampControl.X = extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetX - drawGrid.Margin.Left;
                 ttfMoveStampControl.Y = extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace + workingSpaceTransformation.Value.OffsetY - drawGrid.Margin.Top;
@@ -337,7 +337,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 RectangleShapeBaseControl.SetHeightOfControl(_heightStampControl);
                 RectangleShapeBaseControl.SetWidthOfControl(_widthStampControl);
 
-                TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
+                TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.GetGridWorkingSpaceTransformGroup();
 
                 ttfMoveStampControl.X = workingSpaceTransformation.Value.OffsetX - (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace) - drawGrid.Margin.Left - _widthStampControl;
                 ttfMoveStampControl.Y = workingSpaceTransformation.Value.OffsetY + (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace) - drawGrid.Margin.Top;
@@ -393,7 +393,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 RectangleShapeBaseControl.SetHeightOfControl(_heightStampControl);
                 RectangleShapeBaseControl.SetWidthOfControl(_widthStampControl);
 
-                TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
+                TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.GetGridWorkingSpaceTransformGroup();
 
                 ttfMoveStampControl.X = workingSpaceTransformation.Value.OffsetX - (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace) - _widthStampControl - drawGrid.Margin.Left;
                 ttfMoveStampControl.Y = workingSpaceTransformation.Value.OffsetY - (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace) - drawGrid.Margin.Top - _heightStampControl;
@@ -449,7 +449,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 RectangleShapeBaseControl.SetHeightOfControl(_heightStampControl);
                 RectangleShapeBaseControl.SetWidthOfControl(_widthStampControl);
 
-                TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.getGridWorkingSpaceTransformGroup();
+                TransformGroup workingSpaceTransformation = PocketPaintApplication.GetInstance().PaintingAreaView.GetGridWorkingSpaceTransformGroup();
         
                 ttfMoveStampControl.X = workingSpaceTransformation.Value.OffsetX + (extremeLeftAndTopCoordinate.Y * scaleValueWorkingSpace) - drawGrid.Margin.Left;
                 ttfMoveStampControl.Y = workingSpaceTransformation.Value.OffsetY - (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace) - drawGrid.Margin.Top - _heightStampControl;
@@ -515,7 +515,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         private bool IsStampControlMovable()
         {
-            if(HasPaintingAreaCanvasElements() || PocketPaintApplication.GetInstance().PaintingAreaView.isAppBarButtonSelected("appBtnStampCopy"))
+            if(HasPaintingAreaCanvasElements() || PocketPaintApplication.GetInstance().PaintingAreaView.IsAppBarButtonSelected("appBtnStampCopy"))
             {
                 return true;
             }
@@ -524,7 +524,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void ResetAppBarButtonRectangleSelectionControl(bool activated)
         {
-            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.getAppBarResetButton();
+            AppBarButton appBarButtonReset = PocketPaintApplication.GetInstance().PaintingAreaView.GetAppBarResetButton();
             if (appBarButtonReset != null)
             {
                 appBarButtonReset.IsEnabled = activated;
