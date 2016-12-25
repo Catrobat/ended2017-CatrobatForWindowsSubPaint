@@ -63,7 +63,7 @@
                     >
                     <Rectangle.Fill>
                         <ImageBrush
-                        x:Name="imgBrush"
+                            x:Name="imgBrush"
                         />
                     </Rectangle.Fill>
                 </Rectangle>

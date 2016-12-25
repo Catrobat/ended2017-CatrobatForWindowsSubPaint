@@ -670,11 +670,32 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
         public void SetSourceImageStamp(ImageSource imageSource)
         {
+            var degree = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
+            TransformGroup transformation = new TransformGroup();
             RotateTransform rt = new RotateTransform();
-            rt.Angle = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
+            ScaleTransform flip = new ScaleTransform();
+
+            rt.Angle = degree;
             rt.CenterX = 0.5;
             rt.CenterY = 0.5;
-            imgBrush.RelativeTransform = rt;
+
+            if (isWorkingSpaceFlippedHorizontally)
+            {
+                flip.ScaleY = -1;
+            }
+
+            if (isWorkingSpaceFlippedVertically)
+            {
+                flip.ScaleX = -1;
+            }
+
+            flip.CenterX = 0.5;
+            flip.CenterY = 0.5;
+
+            transformation.Children.Add(flip);
+            transformation.Children.Add(rt);
+
+            imgBrush.RelativeTransform = transformation;
 
             imgBrush.ImageSource = imageSource;
         }
