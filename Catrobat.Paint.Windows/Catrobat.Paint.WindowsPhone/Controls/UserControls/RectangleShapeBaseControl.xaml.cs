@@ -186,8 +186,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void resizeWidth(double deltaX, double deltaY, Orientation orientation)
         {
             Debug.Assert(orientation == Orientation.Left || orientation == Orientation.Right);
-            m_CenterPointRotation.X += deltaX;
-            m_CenterPointRotation.Y += deltaY;
 
             float rotation = m_RotationAngle;
             while (rotation < 0)
@@ -234,8 +232,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void resizeHeight(double deltaX, double deltaY, Orientation orientation)
         {
             Debug.Assert(orientation == Orientation.Top || orientation == Orientation.Bottom);
-            m_CenterPointRotation.X += deltaX;
-            m_CenterPointRotation.Y += deltaY;
 
             float rotation = m_RotationAngle;
             while (rotation < 0)
