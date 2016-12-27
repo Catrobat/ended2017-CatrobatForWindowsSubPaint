@@ -221,7 +221,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         }
 
         public Point GetLeftTopPointOfStampedSelection()
-                {
+        {
             uint canvasHeight = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.Height;
             uint canvasWidth = (uint)PocketPaintApplication.GetInstance().PaintingAreaCanvas.Width;
 
@@ -229,20 +229,19 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             uint heightOfStampSelection = (uint)PocketPaintApplication.GetInstance().StampControl.GetWidthOfRectangleStampSelection();
 
             Point currentLeftTopCoordinateOfStampSelection = GetXyOffsetBetweenPaintingAreaAndStampControlSelection();
-            System.Diagnostics.Debug.WriteLine("cLT: " + currentLeftTopCoordinateOfStampSelection);
          
             return new Point(Convert.ToDouble(currentLeftTopCoordinateOfStampSelection.X), Convert.ToDouble(currentLeftTopCoordinateOfStampSelection.Y));
-                }
+        }
 
         public void ResetCurrentCopiedSelection()
-                {
+        {
             PocketPaintApplication.GetInstance().StampControl.Visibility = Visibility.Collapsed;
             imgBrush.ImageSource = null;
             RectangleShapeBaseControl.ResetRectangleShapeBaseControl();
-                }
+        }
         // TODO: Refactor the setStampSelection function.
         public async void SetStampSelection()
-            {
+        {
             PocketPaintApplication currentPaintApplication = PocketPaintApplication.GetInstance();
             if (currentPaintApplication == null)
             {
@@ -455,16 +454,16 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 ttfMoveStampControl.Y = workingSpaceTransformation.Value.OffsetY - (extremeLeftAndTopCoordinate.X * scaleValueWorkingSpace) - drawGrid.Margin.Top - _heightStampControl;
 
                 if (isWorkingSpaceFlippedHorizontally)
-            {
+                {
                     ttfMoveStampControl.X = tgPaintingAreaCheckeredGrid.Value.OffsetX - drawGrid.Margin.Left - drawGrid.Width+
-                         ((currentPaintApplication.PaintingAreaCanvas.Height - extremeLeftAndTopCoordinate.Y) * scaleValueWorkingSpace);
-            }
+                            ((currentPaintApplication.PaintingAreaCanvas.Height - extremeLeftAndTopCoordinate.Y) * scaleValueWorkingSpace);
+                }
 
                 if (isWorkingSpaceFlippedVertically)
-            {
+                {
                     ttfMoveStampControl.Y = tgPaintingAreaCheckeredGrid.Value.OffsetY - drawGrid.Margin.Top -
                         ((currentPaintApplication.PaintingAreaCanvas.Width - extremeLeftAndTopCoordinate.X) * scaleValueWorkingSpace);
-            }
+                }
 
                 RectangleShapeBase.addTransformation(ttfMoveStampControl);
             }
@@ -546,12 +545,12 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         }
 
         public double GetHeightOfRectangleStampSelection()
-            {
+        {
             return _heightOfRectangle / _scaleValueWorkingSpace;
         }
 
         public double GetWidthOfRectangleStampSelection()
-            {
+        {
             return _widthOfRectangle / _scaleValueWorkingSpace;
         }
 
@@ -569,7 +568,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             Point cornerCoordinates = new Point(_transformGridMain.Value.OffsetX, _transformGridMain.Value.OffsetY);     
 
             if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 0)
-        {
+            {
                 cornerCoordinates.X += GridMain.Margin.Left;
                 cornerCoordinates.Y += GridMain.Margin.Top;
 
@@ -577,16 +576,16 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 double offsetY = (cornerCoordinates.Y - tgPaintingAreaCheckeredGrid.Value.OffsetY) / _scaleValueWorkingSpace;
 
                 if (isWorkingSpaceFlippedHorizontally)
-            {
+                {
                     offsetY = PocketPaintApplication.GetInstance().GridWorkingSpace.Height - (offsetY + GridMain.Height / _scaleValueWorkingSpace);
-            }
+                }
 
                 if (isWorkingSpaceFlippedVertically)
-            {
+                {
                     offsetX = PocketPaintApplication.GetInstance().GridWorkingSpace.Width - (offsetX + GridMain.Width / _scaleValueWorkingSpace);
-            }
+                }
                 return new Point(Math.Ceiling(offsetX), Math.Ceiling(offsetY));
-        }
+            }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 90)
             {
                 cornerCoordinates.X += (GridMain.Margin.Left + GridMain.Width);
@@ -596,17 +595,17 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 double offsetX = (cornerCoordinates.Y - tgPaintingAreaCheckeredGrid.Value.OffsetY) / _scaleValueWorkingSpace;
 
                 if (isWorkingSpaceFlippedHorizontally)
-            {
+                {
                     offsetY = PocketPaintApplication.GetInstance().GridWorkingSpace.Height - (offsetY + GridMain.Width / _scaleValueWorkingSpace);
-            }
+                }
 
                 if (isWorkingSpaceFlippedVertically)
-            {
+                {
                     offsetX = PocketPaintApplication.GetInstance().GridWorkingSpace.Width - (offsetX + GridMain.Height / _scaleValueWorkingSpace);
-            }
+                }
 
                 return new Point(offsetX, offsetY);
-        }
+            }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 180)
             {
                 cornerCoordinates.X += (GridMain.Margin.Left + GridMain.Width);
@@ -616,17 +615,17 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 double offsetY = (tgPaintingAreaCheckeredGrid.Value.OffsetY - cornerCoordinates.Y) / _scaleValueWorkingSpace;
 
                 if (isWorkingSpaceFlippedHorizontally)
-        {
+                {
                     offsetY = PocketPaintApplication.GetInstance().GridWorkingSpace.Height - (offsetY + GridMain.Height / _scaleValueWorkingSpace);
-        }
+                }
 
                 if (isWorkingSpaceFlippedVertically)
-        {
+                {
                     offsetX = PocketPaintApplication.GetInstance().GridWorkingSpace.Width - (offsetX + GridMain.Width / _scaleValueWorkingSpace);
-        }
+                }
 
                 return new Point(offsetX, offsetY);
-        }
+            }
             else if (currentPaintApplication.angularDegreeOfWorkingSpaceRotation == 270)
             {
                 cornerCoordinates.X += GridMain.Margin.Left;
@@ -655,16 +654,9 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         }
 
         public ImageSource GetImageSourceStampedImage()
-            {
+        {
             return imgBrush.ImageSource;
         }
-
-        public void SetOriginalSizeOfStampedImage(double height, double width)
-            {
-            OriginalHeightStampedImage = height;
-            OriginalWidthStampedImage = width;
-        }
-
 
         public void SetSourceImageStamp(ImageSource imageSource)
         {
@@ -678,9 +670,9 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             rt.CenterY = 0.5;
 
             if (isWorkingSpaceFlippedHorizontally)
-        {
+            {
                 flip.ScaleY = -1;
-        }
+            }
 
             if (isWorkingSpaceFlippedVertically)
             {
