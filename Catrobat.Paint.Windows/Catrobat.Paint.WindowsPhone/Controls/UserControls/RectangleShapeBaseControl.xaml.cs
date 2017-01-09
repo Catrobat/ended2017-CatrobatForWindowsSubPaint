@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Catrobat.Paint.WindowsPhone.Tool;
 using System.Numerics;
 using System.Windows;
 
@@ -106,19 +107,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         {
             var translateTransform = new TranslateTransform();
 
-            // TODO: Fix bug of translation when rotated in certain positions. remove then the comments
-            //RotateTransform lastRotateTransform = GetLastRotateTransformation();
-
-            //var deltaX = e.Delta.Translation.X;
-            //var deltaY = e.Delta.Translation.Y;
-            //var rotationRadian = PocketPaintApplication.DegreeToRadian(m_RotationAngle);
-            //var deltaXCorrected = Math.Cos(-rotationRadian) * (deltaX)
-            //        - Math.Sin(-rotationRadian) * (deltaY);
-            //var deltaYCorrected = Math.Sin(-rotationRadian) * (deltaX)
-            //        + Math.Cos(-rotationRadian) * (deltaY);
-            //var xVal = deltaXCorrected;
-            //var yVal = deltaYCorrected;
-
             var xVal = e.Delta.Translation.X;
             var yVal = e.Delta.Translation.Y;
 
@@ -140,10 +128,27 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         private void rectEllipseForMovement_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Debug.Assert(AreaToDraw.Children.Count == 1);
+            ToolBase currentTool  = PocketPaintApplication.GetInstance().ToolCurrent;
+
+            if (currentTool.GetToolType().Equals(ToolType.Stamp))
+            {
+                var buttonName = (CommandBar)PocketPaintApplication.GetInstance().PaintingAreaView.BottomAppBar;
+
+                if(((AppBarButton)(buttonName.PrimaryCommands[0])).Visibility == Visibility.Visible)
+                {
+                    PocketPaintApplication.GetInstance().PaintingAreaView.app_btnStampCopy_Click(sender, e);
+                } else
+                {
+                    PocketPaintApplication.GetInstance().PaintingAreaView.app_btnStampPaste_Click(sender, e);
+                }
+                
+                return;
+            }
+
             UIElement elementToDraw = AreaToDraw.Children[0];
 
             var coord = e.GetPosition(PocketPaintApplication.GetInstance().GridWorkingSpace);
-            //var coord2 = e.GetPosition(elementToDraw);
+            
             var coord2 = e.GetPosition(AreaToDraw);
 
             var angle = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
@@ -175,10 +180,7 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                     coord.Y += (AreaToDraw.Height / 2);
                     break;
             }
-
-
-
-            PocketPaintApplication.GetInstance().ToolCurrent.Draw(coord);
+            currentTool.Draw(coord);
         }
 
         private void resizeWidth(double deltaX, double deltaY, Orientation orientation)
@@ -199,7 +201,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             if (orientation == Orientation.Left)
             {
-                System.Diagnostics.Debug.WriteLine("\nhier");
                 deltaXCorrected = deltaXCorrected * -1;
             }
 
@@ -225,22 +226,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 deltaXRight = deltaXCorrected;
             }
-            ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left - deltaXLeft,
-                                            GridMainSelection.Margin.Top,
-                                            GridMainSelection.Margin.Right - deltaXRight,
-                                            GridMainSelection.Margin.Bottom);
-
-            //var transform = rectRectangleToDraw.TransformToVisual(GridMainSelection);
-            //Point absolutePosition = transform.TransformPoint(new Point(0, 0));
-
-            //absolutePosition.X += rectRectangleToDraw.Width / 2;
-            //absolutePosition.Y += rectRectangleToDraw.Height / 2;
-
-            //RotateTransform rt;
-
-            //rt = new RotateTransform { Angle = m_rotation, CenterX = absolutePosition.X, CenterY = absolutePosition.Y };
-            //addTransformation(rt);
-
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnWidthValue = newWidthRectangleToDraw;
         }
 
@@ -286,13 +271,6 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
             {
                 deltaYBottom = deltaYCorrected;
             }
-            ChangeMarginOfGridMainSelection(GridMainSelection.Margin.Left,
-                                            GridMainSelection.Margin.Top - deltaYTop,
-                                            GridMainSelection.Margin.Right,
-                                            GridMainSelection.Margin.Bottom - deltaYBottom);
-
- 
-
             PocketPaintApplication.GetInstance().BarRecEllShape.setBtnHeightValue = newHeightRectangleToDraw;
         }
 
@@ -422,20 +400,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 GridMainSelection.Height = newHeightRectangleToDraw + (GridMainSelection.Height - AreaToDrawGrid.Height);
                 MovementRectangle.Height = newHeightRectangleToDraw + (MovementRectangle.Height - AreaToDrawGrid.Height);
                 AreaToDrawGrid.Height = newHeightRectangleToDraw;
+                PocketPaintApplication.GetInstance().StampControl.setHeightOfControl(newHeightRectangleToDraw);
             }
-        }
-
-        public double heightOfRectangleToDraw
-        {
-            get
-            {
-                return AreaToDrawGrid.Height;
-            }
-            set
-            {
-                AreaToDrawGrid.Height = value;
-            }
-            
         }
 
         public void SetWidthOfControl(double newWidthRectangleToDraw)
@@ -446,23 +412,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
                 GridMainSelection.Width = newWidthRectangleToDraw + (GridMainSelection.Width - AreaToDrawGrid.Width);
                 MovementRectangle.Width = newWidthRectangleToDraw + (MovementRectangle.Width - AreaToDrawGrid.Width);
                 AreaToDrawGrid.Width = newWidthRectangleToDraw;
-            }
+                PocketPaintApplication.GetInstance().StampControl.setWidthOfControl(newWidthRectangleToDraw);
         }
-        public double widthOfRectangleToDraw
-        {
-            get
-            {
-                return AreaToDrawGrid.Width;
-            }
-            set
-            {
-                AreaToDrawGrid.Width = value;
-            }
-        }
-
-        private void ChangeMarginOfGridMainSelection(double leftMargin, double topMargin, double rightMargin, double bottomMargin)
-        {        
-            GridMainSelection.Margin = new Thickness(leftMargin, topMargin, rightMargin, bottomMargin);
         }
 
         public void ResetRectangleShapeBaseControl()
@@ -490,18 +441,8 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
 
             ResetAppBarButtonRectangleSelectionControl(false);
             IsModifiedRectangleForMovement = false;
-
-            // TODO: evaluate if the outcommented code is needed
-            //PocketPaintApplication.GetInstance().PaintingAreaManipulationListener.lastPoint = new Point(0.0, 0.0);
-            //RotateTransform rotate = new RotateTransform();
-            //var angle = PocketPaintApplication.GetInstance().angularDegreeOfWorkingSpaceRotation;
-            //rotate.Angle = -angle;
-            //Point point = new Point(0.5, 0.5);
-            //PocketPaintApplication.GetInstance().RectangleSelectionControl.RenderTransformOrigin = point;
-            //PocketPaintApplication.GetInstance().RectangleSelectionControl.RenderTransform = rotate;
-
-            //PocketPaintApplication.GetInstance().EllipseSelectionControl.RenderTransformOrigin = point;
-            //PocketPaintApplication.GetInstance().EllipseSelectionControl.RenderTransform = rotate;
+            PocketPaintApplication.GetInstance().StampControl.HorizontalAlignment = HorizontalAlignment.Center;
+            PocketPaintApplication.GetInstance().StampControl.VerticalAlignment = VerticalAlignment.Center;
         }
 
         private void TopLeftGrid_OnManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
@@ -627,6 +568,11 @@ namespace Catrobat.Paint.WindowsPhone.Controls.UserControls
         {
             Point result = new Point(p1.X + p2.X, p1.Y + p2.Y);
             return result;
+        }
+
+        public TransformGroup GetTransformation()
+        {
+            return m_TransformGridMain;
         }
     }
 }
